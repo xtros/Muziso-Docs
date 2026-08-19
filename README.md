@@ -33,8 +33,8 @@
 - 🏗️ **[Architecture Guide](docs/ARCHITECTURE.md)**: Deep dive into Tauri IPC, JioSaavn 320kbps CDN resolver, GStreamer audio pipeline, SQLite persistence, and yt-dlp sidecar integration.
 - ⚡ **[Installation & Build Guide](docs/INSTALLATION.md)**: Detailed setup steps for Windows, macOS, and Linux.
 - 🤝 **[Contributing & Bug Hunter Program](docs/CONTRIBUTING.md)**: Guidelines for code contributions and bug bounty rewards.
-- 🔒 **[Privacy Policy](docs/PRIVACY.md)**: Privacy commitment, 100% local database storage, zero telemetry disclosure.
-- ⚖️ **[Terms & Conditions](docs/TERMS.md)**: Terms of service, open-source licensing, and third-party media disclaimers.
+- 🔒 **[Privacy Policy](docs/privacy.html)**: Privacy commitment, 100% local database storage, zero telemetry disclosure.
+- ⚖️ **[Terms & Conditions](docs/terms.html)**: Terms of service, open-source licensing, and third-party media disclaimers.
 
 ---
 
@@ -142,5 +142,5 @@ Found a functional bug, stream error, or UI glitch in **Muziso**? Help improve t
 ## 📜 License & Legal
 
 - **Software License**: Distributed under the MIT License. See [`LICENSE`](https://github.com/xtros/Muziso/blob/main/LICENSE) for details.
-- **Privacy Policy**: See **[PRIVACY.md](docs/PRIVACY.md)** for data handling details.
-- **Terms & Conditions**: See **[TERMS.md](docs/TERMS.md)** for user agreements and media disclaimers.
+- **Privacy Policy**: See **[privacy.html](docs/privacy.html)** for data handling details.
+- **Terms & Conditions**: See **[terms.html](docs/terms.html)** for user agreements and media disclaimers.
