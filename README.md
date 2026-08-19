@@ -51,6 +51,19 @@
 
 ---
 
+
+---
+
+## 📂 Your Library & Custom Playlists
+
+<p align="center">
+  <img src="assets/library.png" alt="Muziso Your Library View" width="100%" />
+</p>
+
+- 📁 **Local Music Import**: Import local music folders (`.mp3`, `.m4a`, `.flac`, `.wav`, `.opus`) with automatic tag indexing.
+- ❤️ **Liked Songs**: Instant 1-click favorite song bookmarking saved directly to your local database.
+- ➕ **Custom Playlists**: Create, reorder, and manage custom playlists with personalized covers.
+
 ## ⚡ Download & Installation
 
 Visit the **[Muziso Releases Page](https://github.com/xtros/Muziso/releases)** to grab the latest standalone installer (`v0.1.8`) for your system:
