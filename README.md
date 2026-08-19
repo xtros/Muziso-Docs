@@ -1,4 +1,4 @@
-# 🎵 Muziso Documentation Repository
+# 🎵 Muziso
 
 <p align="center">
   <img src="https://i.postimg.cc/yYvXBWK5/Muziso.png" alt="Muziso Showcase" width="100%" />
@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://xtros.github.io/Muziso/"><img src="https://img.shields.io/badge/Documentation-GitHub%20Pages-ccff00?style=for-the-badge&logo=githubpages&logoColor=black" alt="Documentation Site" /></a>
-  <a href="https://github.com/xtros/Muziso/releases"><img src="https://img.shields.io/github/v/release/xtros/Muziso?color=ccff00&label=Release&style=for-the-badge" alt="Latest Release" /></a>
+  <a href="https://github.com/xtros/Muziso/releases"><img src="https://img.shields.io/github/v/release/xtros/Muziso?color=ccff00&label=Release%20v0.1.8&style=for-the-badge" alt="Latest Release v0.1.8" /></a>
   <a href="https://github.com/xtros/Muziso/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-ccff00?style=for-the-badge" alt="MIT License" /></a>
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-181825?style=for-the-badge&logo=github" alt="Platforms" />
   <img src="https://img.shields.io/badge/Tauri-v2-FFC107?style=for-the-badge&logo=tauri&logoColor=black" alt="Tauri v2" />
@@ -14,45 +14,48 @@
 </p>
 
 <p align="center">
-  <b>Muziso</b> is a premium, dark-themed, glassmorphic desktop music player built for modern listeners. Powered by a high-performance <b>React (TypeScript)</b> + <b>Rust (Tauri v2)</b> engine, Muziso seamlessly combines local library playback, high-fidelity web audio resolution, and offline caching.
+  <b>Muziso</b> is a premium, dark-themed, glassmorphic desktop music player built for modern listeners. Powered by a high-performance <b>React 19 (TypeScript)</b> + <b>Rust (Tauri v2)</b> engine, Muziso combines sub-30ms 320 kbps JioSaavn direct streaming, smart version-preserving deduplication, guaranteed official album artwork, local library playback, and offline caching.
 </p>
 
 <p align="center">
-  📖 <b><a href="docs/index.html">View Local HTML Documentation Page</a></b>
+  📖 <b><a href="https://xtros.github.io/Muziso/">Visit the Live GitHub Documentation Web Page</a></b>
 </p>
 
 ---
 
-## 📚 Quick Documentation Links
+## 📚 Documentation & Legal Links
 
-- 🌐 **[GitHub Pages Documentation Site](docs/index.html)**: Interactive documentation, feature breakdowns, and API references.
-- 🏗️ **[Architecture Guide](docs/ARCHITECTURE.md)**: Deep dive into Tauri IPC, GStreamer audio pipeline, SQLite persistence, and yt-dlp sidecar integration.
+- 🌐 **[GitHub Pages Documentation Site](https://xtros.github.io/Muziso/)**: Interactive documentation, feature breakdowns, and live release notes.
+- 🏗️ **[Architecture Guide](docs/ARCHITECTURE.md)**: Deep dive into Tauri IPC, JioSaavn 320kbps CDN resolver, GStreamer audio pipeline, SQLite persistence, and yt-dlp sidecar integration.
 - ⚡ **[Installation & Build Guide](docs/INSTALLATION.md)**: Detailed setup steps for Windows, macOS, and Linux.
 - 🤝 **[Contributing & Bug Hunter Program](docs/CONTRIBUTING.md)**: Guidelines for code contributions and bug bounty rewards.
+- 🔒 **[Privacy Policy](docs/PRIVACY.md)**: Privacy commitment, 100% local database storage, zero telemetry disclosure.
+- ⚖️ **[Terms & Conditions](docs/TERMS.md)**: Terms of service, open-source licensing, and third-party media disclaimers.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Features (v0.1.8)
 
+- ⚡ **JioSaavn Direct 320 kbps Streaming**: Instant sub-30ms CDN audio resolution (`song.getDetails&pids={id}`) for JioSaavn tracks, Search results, Recommended Songs, and Playlists.
+- 🔄 **Smart Version-Preserving Deduplication**: Automatically collapses identical song re-releases across compilation albums while preserving legitimate alternate versions & language dubs (`Remix`, `Unplugged`, `Acoustic`, `Lofi`, `Tamil`, `Telugu`, `Hindi`, `Malayalam`, `Kannada`).
+- 🎨 **Guaranteed Official High-Res Cover Engine**: Deep artwork metadata extraction paired with an automatic Spotify **640x640 official cover resolver** for every track across the app.
+- 👨‍🎤 **Official Artist Discography Sourcing**: Artist Pages query official studio albums and singles exclusively (`include_groups=album,single`), filtering out third-party playlists and compilations.
+- 🎶 **Autoplay Queue & Recommended "Play All"**: View upcoming autoplay recommendations inside the Play Queue drawer and start playing all recommended tracks with 1 click.
 - 🎧 **Hybrid Audio Engine**: Play local music collections (`.mp3`, `.m4a`, `.wav`, `.opus`, `.flac`) alongside dynamic online streams.
-- ⚡ **IP-Bound Stream Resolution**: Dynamically extracts high-quality audio streams using a local, platform-decoupled `yt-dlp` sidecar engine.
 - 📥 **Offline Download & Library Management**: Save tracks locally for immediate offline playback with custom metadata and artwork indexing.
-- 🔀 **Smart Queue & Shuffle Pipeline**: Shuffled play queue with intelligent un-shuffle state tracking and deterministic historical navigation.
-- 📣 **Developer Announcement Feed**: In-app announcements feed with read/unread tracking and remote notification sync.
 - 🎨 **Glassmorphic Cyber-Minimal UI**: High-fidelity dark mode with signature neon branding (`#ccff00`), smooth Framer Motion transitions, custom modal overlays, and responsive routing resets.
-- 🎚️ **Decoupled Controls**: Native event isolation preventing gesture overlap between drag sliders, volume controllers, and swipe overlays.
 
 ---
 
 ## ⚡ Download & Installation
 
-Visit the **[Muziso Releases Page](https://github.com/xtros/Muziso/releases)** to grab the latest standalone installer for your system:
+Visit the **[Muziso Releases Page](https://github.com/xtros/Muziso/releases)** to grab the latest standalone installer (`v0.1.8`) for your system:
 
 | Platform | Package Format | Download Link |
 | :--- | :--- | :--- |
-| **Windows** | `.exe` / `.msi` / `.zip` | [Latest Windows Release](https://github.com/xtros/Muziso/releases/latest) |
-| **macOS** | `.dmg` / `.app` | [Latest macOS Release](https://github.com/xtros/Muziso/releases/latest) |
-| **Linux** | `.deb` / `.AppImage` | [Latest Linux Release](https://github.com/xtros/Muziso/releases/latest) |
+| **Windows** | `.exe` / `.msi` / `.zip` | [Latest Windows Release (v0.1.8)](https://github.com/xtros/Muziso/releases/latest) |
+| **macOS** | `.dmg` / `.app` | [Latest macOS Release (v0.1.8)](https://github.com/xtros/Muziso/releases/latest) |
+| **Linux** | `.deb` / `.AppImage` | [Latest Linux Release (v0.1.8)](https://github.com/xtros/Muziso/releases/latest) |
 
 > [!NOTE]
 > **Windows SmartScreen Notice**: Because Muziso is an open-source binary without a paid commercial certificate, Windows Defender SmartScreen may display an *"Unknown Publisher"* prompt on first launch. Click **"More info"** &rarr; **"Run anyway"** to continue.
@@ -63,7 +66,8 @@ Visit the **[Muziso Releases Page](https://github.com/xtros/Muziso/releases)** t
 
 - **Frontend Core**: React 19, TypeScript, Framer Motion, Lucide Icons, Cyber-Minimal Design System
 - **Desktop Architecture**: Tauri v2 (Rust)
-- **Audio Pipeline**: GStreamer (Native Rust FFI bindings) + Rodio
+- **Audio Pipeline**: JioSaavn 320kbps CDN Resolver + GStreamer (Native Rust FFI) + Rodio
+- **Artwork Engine**: Spotify Official 640x640 Web API Cover Resolver + JioSaavn 500x500 Image Extractor
 - **Local Persistence**: SQLite (`rusqlite`) for library indexing, play counts, and queue state
 - **Stream Engine**: `yt-dlp` packaged as a platform-decoupled sidecar binary
 
@@ -93,6 +97,8 @@ Found a functional bug, stream error, or UI glitch in **Muziso**? Help improve t
 
 ---
 
-## 📜 License
+## 📜 License & Legal
 
-Distributed under the MIT License. See [`LICENSE`](https://github.com/xtros/Muziso/blob/main/LICENSE) for more details.
+- **Software License**: Distributed under the MIT License. See [`LICENSE`](https://github.com/xtros/Muziso/blob/main/LICENSE) for details.
+- **Privacy Policy**: See **[PRIVACY.md](docs/PRIVACY.md)** for data handling details.
+- **Terms & Conditions**: See **[TERMS.md](docs/TERMS.md)** for user agreements and media disclaimers.

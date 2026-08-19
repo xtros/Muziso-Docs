@@ -1,12 +1,12 @@
 # ⚡ Muziso Installation & Developer Build Guide
 
-Official installation guide for **Muziso** across Windows, macOS, and Linux.
+Official installation and developer build guide for **Muziso** (v0.1.8) across Windows, macOS, and Linux.
 
 ---
 
 ## 📥 End-User Installation
 
-Visit the **[Muziso GitHub Releases](https://github.com/xtros/Muziso/releases)** page to download the latest installer for your system.
+Visit the **[Muziso GitHub Releases](https://github.com/xtros/Muziso/releases)** page to download the latest installer (`v0.1.8`) for your system.
 
 ### 🪟 Windows
 - **Downloads**: `.exe` Installer, `.msi` Package, or Standalone `.zip`
@@ -26,58 +26,38 @@ Visit the **[Muziso GitHub Releases](https://github.com/xtros/Muziso/releases)**
 
 ---
 
-## 🛠️ Developer Setup & Build Instructions
+## 🛠️ Developer Build Instructions
 
-### Prerequisites
-- **Node.js**: v18.0 or higher
-- **Rust Toolchain**: Install via [rustup.rs](https://rustup.rs)
-- **GStreamer Engine**:
+### 1. Prerequisites
 
-#### 1. Windows Setup
-Install GStreamer MSVC packages using Chocolatey:
-```powershell
-choco install gstreamer-runtime gstreamer-devel pkgconfiglite -y
-$env:PKG_CONFIG_PATH = "C:\gstreamer\1.0\msvc_x86_64\lib\pkgconfig"
-$env:GSTREAMER_1_0_ROOT_X86_64 = "C:\gstreamer\1.0\msvc_x86_64\"
-```
+- **Node.js**: `v18.0.0` or higher
+- **Rust**: `1.75.0` or higher (`rustup`)
+- **Tauri CLI**: Installed automatically via `package.json` (`@tauri-apps/cli`)
+- **C++ Build Tools**:
+  - **Windows**: Visual Studio 2022 C++ Build Tools
+  - **macOS**: Xcode Command Line Tools (`xcode-select --install`)
+  - **Linux**: `build-essential`, `libssl-dev`, `libgtk-3-dev`, `libgstreamer1.0-dev`, `libgstreamer-plugins-base1.0-dev`
 
-#### 2. macOS Setup
-Install via Homebrew:
+### 2. Setup & Development
+
 ```bash
-brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly pkg-config
+# Clone the repository
+git clone https://github.com/xtros/Muziso.git
+cd Muziso
+
+# Install Node dependencies
+npm install
+
+# Run the Tauri v2 desktop app in development mode
+npm run tauri dev
 ```
 
-#### 3. Linux (Ubuntu / Debian) Setup
-Install via APT:
+### 3. Production Build
+
+To compile standalone production installers (`.exe`, `.msi`, `.dmg`, `.deb`, `.AppImage`):
+
 ```bash
-sudo apt update && sudo apt install -y \
-  build-essential pkg-config libasound2-dev \
-  libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
-  libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev \
-  gstreamer1.0-plugins-ugly libwebkit2gtk-4.1-dev
+npx tauri build
 ```
 
----
-
-### Step-by-Step Local Compilation
-
-1. **Clone Repository**:
-   ```bash
-   git clone https://github.com/xtros/Muziso.git
-   cd Muziso
-   ```
-
-2. **Install Frontend Dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start Development Server**:
-   ```bash
-   npm run tauri dev
-   ```
-
-4. **Build Production Desktop Package**:
-   ```bash
-   npm run tauri build
-   ```
+Compiled binaries will be generated inside `src-tauri/target/release/bundle/`.

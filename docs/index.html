@@ -512,6 +512,8 @@
         <li><a href="#features" onclick="switchTab('features')">Features</a></li>
         <li><a href="#installation" onclick="switchTab('installation')">Installation</a></li>
         <li><a href="#architecture" onclick="switchTab('architecture')">Architecture</a></li>
+        <li><a href="#privacy" onclick="switchTab('privacy')">Privacy</a></li>
+        <li><a href="#terms" onclick="switchTab('terms')">Terms</a></li>
         <li><a href="#bug-bounty" onclick="switchTab('bug-bounty')">Bug Bounty</a></li>
       </ul>
       <a href="https://github.com/xtros/Muziso" target="_blank" class="nav-btn">
@@ -528,16 +530,16 @@
     <section class="hero">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        Official Muziso Documentation Hub
+        Official Muziso Documentation Hub (v0.1.8)
       </div>
       <h1>The Next-Gen <span>Glassmorphic</span> Desktop Music Player</h1>
       <p>
-        Muziso brings local audio collections and high-fidelity web streaming into a seamless, high-performance desktop app powered by React 19, Rust, Tauri v2, GStreamer, and SQLite.
+        Muziso brings local audio collections, JioSaavn 320kbps direct CDN streaming, smart deduplication, and guaranteed official cover art into a high-performance desktop app powered by React 19, Rust, Tauri v2, GStreamer, and SQLite.
       </p>
       <div class="hero-cta">
         <a href="https://github.com/xtros/Muziso/releases/latest" class="btn-lg btn-primary">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          Download Desktop App
+          Download Desktop App (v0.1.8)
         </a>
         <a href="#installation" onclick="switchTab('installation')" class="btn-lg btn-secondary">
           View Setup Guide
@@ -551,7 +553,8 @@
       <button class="tab-btn" onclick="switchTab('features')">Features</button>
       <button class="tab-btn" onclick="switchTab('installation')">Installation & Setup</button>
       <button class="tab-btn" onclick="switchTab('architecture')">Architecture</button>
-      <button class="tab-btn" onclick="switchTab('api')">API & Commands</button>
+      <button class="tab-btn" onclick="switchTab('privacy')">Privacy Policy</button>
+      <button class="tab-btn" onclick="switchTab('terms')">Terms & Conditions</button>
       <button class="tab-btn" onclick="switchTab('bug-bounty')">Bug Bounty</button>
     </div>
 
@@ -771,7 +774,44 @@ npm run tauri dev</code></pre>
       </div>
     </section>
 
-    <!-- TAB 6: BUG BOUNTY -->
+    <!-- TAB 5: PRIVACY POLICY -->
+    <section id="privacy" class="doc-section">
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h3>Privacy Policy</h3>
+        <p style="margin-bottom: 1rem; color: var(--accent-neon);">Effective Date: February 19, 2026 (v0.1.8)</p>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Muziso is designed around a <strong>privacy-first, offline-capable architecture</strong>. The Application does not collect, store, or sell your personal information, browsing history, listening habits, or library metadata.</p>
+        
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">1. Local Storage & Database</h4>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">All user data—including liked songs, playlists, play counts, history, and app preferences—is stored 100% locally on your device inside an encrypted/sandboxed SQLite database (<code>muziso.db</code>). This data never leaves your device.</p>
+        
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">2. External Streams & Metadata</h4>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">When streaming online audio or viewing artist discographies, Muziso requests direct public metadata (JioSaavn, Spotify API, YouTube via <code>yt-dlp</code>). No user identification tokens, email addresses, or personal accounts are transmitted.</p>
+
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">3. Zero Telemetry & Tracking</h4>
+        <p style="color: var(--text-muted);">Muziso contains zero telemetry, zero analytics scripts, and zero tracking pixels. For full details, see <a href="PRIVACY.md" style="color: var(--accent-neon);">PRIVACY.md</a>.</p>
+      </div>
+    </section>
+
+    <!-- TAB 6: TERMS & CONDITIONS -->
+    <section id="terms" class="doc-section">
+      <div class="card">
+        <div class="card-icon">⚖️</div>
+        <h3>Terms & Conditions</h3>
+        <p style="margin-bottom: 1rem; color: var(--accent-neon);">Effective Date: February 19, 2026 (v0.1.8)</p>
+        
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">1. Open-Source Licensing</h4>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" style="color: var(--accent-neon);">MIT License</a>. You are free to run, modify, compile, and distribute copies for personal or educational purposes.</p>
+
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">2. Fair Use & Third-Party Content</h4>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Muziso acts as a user interface client for local media files and public web services. All trademarks, song titles, artist names, and cover art remain the intellectual property of their respective rights holders. Muziso does not host, upload, or monetize copyrighted media files on external servers.</p>
+
+        <h4 style="color: #fff; margin-bottom: 0.5rem;">3. Warranty Disclaimer</h4>
+        <p style="color: var(--text-muted);">Muziso is provided "AS IS", without warranty of any kind. See <a href="TERMS.md" style="color: var(--accent-neon);">TERMS.md</a> for complete legal disclaimers.</p>
+      </div>
+    </section>
+
+    <!-- TAB 7: BUG BOUNTY -->
     <section id="bug-bounty" class="doc-section">
       <div class="card">
         <div class="card-icon">🎯</div>
