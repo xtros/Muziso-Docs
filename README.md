@@ -49,59 +49,38 @@
 - 📥 **Offline Download & Library Management**: Save tracks locally for immediate offline playback with custom metadata and artwork indexing.
 - 🎨 **Cyber-Minimal UI**: High-fidelity dark mode with signature neon branding (`#ccff00`), smooth Framer Motion transitions, custom modal overlays, and responsive routing resets.
 
----
-
 
 ---
 
+## 🖼️ Gallery
 
----
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <b>🎧 Immersive Fullscreen Audio Player</b><br/>
+      <sub>Ambient artwork blur &amp; 3D vinyl disc animation</sub><br/><br/>
+      <img src="assets/player.png" alt="Muziso Audio Player" width="100%" />
+    </td>
+    <td align="center" width="50%">
+      <b>📂 Your Library &amp; Custom Playlists</b><br/>
+      <sub>Local music import, Liked Songs &amp; playlist management</sub><br/><br/>
+      <img src="assets/library.png" alt="Muziso Your Library" width="100%" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <b>🎚️ 10-Band Graphic Equalizer &amp; Studio DSP</b><br/>
+      <sub>31Hz–16kHz faders, live frequency curve &amp; genre presets</sub><br/><br/>
+      <img src="assets/equalizer.png" alt="Muziso Graphic Equalizer" width="100%" />
+    </td>
+    <td align="center" width="50%">
+      <b>👤 Account Profile &amp; Listening Statistics</b><br/>
+      <sub>Avatar customization, member status &amp; playback stats</sub><br/><br/>
+      <img src="assets/profile.png" alt="Muziso Account Profile" width="100%" />
+    </td>
+  </tr>
+</table>
 
-## 🎧 Immersive Fullscreen Audio Player
-
-<p align="center">
-  <img src="assets/player.png" alt="Muziso Audio Player" width="70%" />
-</p>
-
-- 🌌 **Ambient Dynamic Artwork Blur**: Real-time ambient background glow matching the colors of the active track artwork.
-- 💿 **3D Vinyl Record Animation**: Interactive spinning vinyl disc popping out behind high-res cover art.
-- 🎛️ **Full Playback Controls**: Scrubber timeline, volume controller, shuffle/repeat toggles, queue drawer, and history shortcuts.
-
-
----
-
-
----
-
-## 👤 Account Profile & Listening Statistics
-
-<p align="center">
-  <img src="assets/profile.png" alt="Muziso Account Profile" width="70%" />
-</p>
-
-- 🛡️ **Account & Avatar Customization**: Custom user profile picture, avatar uploader, and active membership status badge.
-- 📊 **Real-time Listening Statistics**: Live counters tracking saved recent tracks, total liked songs, and active account verification.
-- 🔑 **Secure Authentication & Management**: Instant 1-click Sign Out, profile editing, and local session management.
-
-## 🎚️ 10-Band Graphic Equalizer & Studio DSP Processing
-
-<p align="center">
-  <img src="assets/equalizer.png" alt="Muziso Graphic Equalizer" width="70%" />
-</p>
-
-- 🎛️ **10-Band Precision Control**: Fine-tune frequencies from 31Hz (Sub Bass) to 16kHz (Air) with real-time (+12 dB / -24 dB) gain adjustments.
-- 📊 **Real-time Frequency Response Curve**: Live visual feedback graph illustrating your acoustic output curve.
-- 🎚️ **Built-in Studio Presets**: 1-click preset switching including `Flat`, `Bass Boost`, `Treble Boost`, `Electronic`, `Rock`, `Pop`, `Vocal`, `Classical`, and `Jazz`.
-
-## 📂 Your Library & Custom Playlists
-
-<p align="center">
-  <img src="assets/library.png" alt="Muziso Your Library" width="70%" />
-</p>
-
-- 📁 **Local Music Import**: Import local music folders (`.mp3`, `.m4a`, `.flac`, `.wav`, `.opus`) with automatic tag indexing.
-- ❤️ **Liked Songs**: Instant 1-click favorite song bookmarking saved directly to your local database.
-- ➕ **Custom Playlists**: Create, reorder, and manage custom playlists with personalized covers.
 
 ## ⚡ Download & Installation
 
