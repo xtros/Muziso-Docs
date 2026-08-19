@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muziso Documentation - Modern Glassmorphic Desktop Music Player</title>
+  <meta name="description" content="Official documentation for Muziso: A high-performance, glassmorphic desktop music player powered by React 19, Tauri v2, GStreamer, and Rust." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #09090b;
+      --bg-surface: #121215;
+      --bg-card: rgba(24, 24, 27, 0.75);
+      --bg-card-hover: rgba(39, 39, 42, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(204, 255, 0, 0.3);
+      --accent-neon: #ccff00;
+      --accent-neon-glow: rgba(204, 255, 0, 0.25);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --text-dark: #18181b;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Ambient Background Effects */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.25;
+    }
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: #ccff00;
+      top: -100px;
+      left: -100px;
+    }
+    .orb-2 {
+      width: 600px;
+      height: 600px;
+      background: #7c3aed;
+      bottom: -200px;
+      right: -100px;
+    }
+
+    /* Layout Wrapper */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 9, 11, 0.8);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #fff;
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ccff00, #84cc16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: 900;
+      color: #000;
+      font-size: 1.25rem;
+      box-shadow: 0 0 15px var(--accent-neon-glow);
+    }
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .brand-tag {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      background: rgba(204, 255, 0, 0.15);
+      border: 1px solid var(--border-glow);
+      color: var(--accent-neon);
+      border-radius: 999px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent-neon);
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-neon);
+      color: var(--text-dark);
+      padding: 0.55rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 15px var(--accent-neon-glow);
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 25px rgba(204, 255, 0, 0.4);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 5rem 0 3.5rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-neon);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-neon);
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 3.6rem;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #ccff00 0%, #84cc16 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .btn-lg {
+      padding: 0.85rem 2rem;
+      font-size: 1rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-primary {
+      background: var(--accent-neon);
+      color: #000;
+      box-shadow: 0 0 25px var(--accent-neon-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(204, 255, 0, 0.5);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    /* Documentation Navigation Tabs */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 3rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .tab-btn.active {
+      color: var(--accent-neon);
+      background: rgba(204, 255, 0, 0.1);
+      border-bottom: 2px solid var(--accent-neon);
+    }
+
+    /* Content Sections */
+    .doc-section {
+      display: none;
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    .doc-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Glass Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      border-color: rgba(204, 255, 0, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(204, 255, 0, 0.1);
+      border: 1px solid var(--border-glow);
+      color: var(--accent-neon);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Code Blocks */
+    .code-block {
+      background: #0d0d10;
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      margin: 1.25rem 0;
+      overflow: hidden;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-code);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .copy-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.78rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .copy-btn:hover {
+      color: var(--accent-neon);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    pre {
+      padding: 1.25rem 1rem;
+      overflow-x: auto;
+      font-family: var(--font-code);
+      font-size: 0.88rem;
+      color: #e4e4e7;
+      line-height: 1.6;
+    }
+
+    /* Architecture Visualizer */
+    .arch-diagram {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .arch-nodes {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .arch-node {
+      background: rgba(24, 24, 27, 0.9);
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem 1.5rem;
+      border-radius: 1rem;
+      min-width: 180px;
+    }
+    .arch-node.active-node {
+      border-color: var(--accent-neon);
+      box-shadow: 0 0 20px var(--accent-neon-glow);
+    }
+    .arch-node h4 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      color: var(--accent-neon);
+      margin-bottom: 0.25rem;
+    }
+    .arch-node span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .arch-arrow {
+      color: var(--accent-neon);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: var(--bg-surface);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+    th, td {
+      padding: 0.9rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.92rem;
+    }
+    th {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      font-weight: 700;
+    }
+    td {
+      color: var(--text-muted);
+    }
+    td code {
+      font-family: var(--font-code);
+      color: var(--accent-neon);
+      background: rgba(204, 255, 0, 0.1);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 0;
+      margin-top: 5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--accent-neon);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .nav-links { display: none; }
+      .arch-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <div class="brand-logo">M</div>
+        <div class="brand-title">Muziso</div>
+        <span class="brand-tag">v0.1.8</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#overview" onclick="switchTab('overview')">Overview</a></li>
+        <li><a href="#features" onclick="switchTab('features')">Features</a></li>
+        <li><a href="#installation" onclick="switchTab('installation')">Installation</a></li>
+        <li><a href="#architecture" onclick="switchTab('architecture')">Architecture</a></li>
+        <li><a href="#bug-bounty" onclick="switchTab('bug-bounty')">Bug Bounty</a></li>
+      </ul>
+      <a href="https://github.com/xtros/Muziso" target="_blank" class="nav-btn">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub Repository
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Official Muziso Documentation Hub
+      </div>
+      <h1>The Next-Gen <span>Glassmorphic</span> Desktop Music Player</h1>
+      <p>
+        Muziso brings local audio collections and high-fidelity web streaming into a seamless, high-performance desktop app powered by React 19, Rust, Tauri v2, GStreamer, and SQLite.
+      </p>
+      <div class="hero-cta">
+        <a href="https://github.com/xtros/Muziso/releases/latest" class="btn-lg btn-primary">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download Desktop App
+        </a>
+        <a href="#installation" onclick="switchTab('installation')" class="btn-lg btn-secondary">
+          View Setup Guide
+        </a>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('overview')">Overview</button>
+      <button class="tab-btn" onclick="switchTab('features')">Features</button>
+      <button class="tab-btn" onclick="switchTab('installation')">Installation & Setup</button>
+      <button class="tab-btn" onclick="switchTab('architecture')">Architecture</button>
+      <button class="tab-btn" onclick="switchTab('api')">API & Commands</button>
+      <button class="tab-btn" onclick="switchTab('bug-bounty')">Bug Bounty</button>
+    </div>
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="overview" class="doc-section active">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>Native Rust Performance</h3>
+          <p>Built on Tauri v2 and native Rust FFI bindings, Muziso uses a fraction of the memory of traditional Electron music apps while maintaining instant response times.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎧</div>
+          <h3>Hybrid Audio Engine</h3>
+          <p>Play high-bitrate local audio files (<code>.flac</code>, <code>.wav</code>, <code>.mp3</code>, <code>.m4a</code>, <code>.opus</code>) seamlessly alongside online stream extraction using local sidecar processes.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎨</div>
+          <h3>Glassmorphic UI</h3>
+          <p>Signature cyber-minimal dark interface featuring custom Framer Motion page transitions, glowing visualizer overlays, and responsive volume controls.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <h3>Local Privacy & Offline</h3>
+          <p>Your library remains local. Muziso indexes tracks in a lightweight SQLite database (<code>rusqlite</code>) and stores downloads directly on your file system.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: FEATURES -->
+    <section id="features" class="doc-section">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>IP-Bound Stream Resolution</h3>
+          <p>Integrated platform-decoupled <code>yt-dlp</code> sidecar engine to resolve online high-resolution audio streams directly with zero proxy latency.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔀</div>
+          <h3>Smart Queue & Shuffle</h3>
+          <p>Advanced queue management maintaining deterministic historical back-navigation even when shuffle mode is toggled on and off.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📢</div>
+          <h3>In-App Announcement Feed</h3>
+          <p>Real-time developer update feed with read/unread tracking and remote synchronization directly inside the client interface.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎮</div>
+          <h3>Discord Rich Presence</h3>
+          <p>Displays currently playing song, artist, duration, and album cover art on your Discord profile automatically.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎹</div>
+          <h3>Global Hotkeys</h3>
+          <p>Control playback (Play/Pause, Next, Previous) system-wide even when Muziso is minimized or running in the background.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💾</div>
+          <h3>Offline Caching & Downloads</h3>
+          <p>Save streaming audio tracks to your disk for immediate offline playback with custom metadata tag indexing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: INSTALLATION -->
+    <section id="installation" class="doc-section">
+      <div class="card" style="margin-bottom: 2rem;">
+        <h3>End-User Install Packages</h3>
+        <p style="margin-bottom: 1rem;">Download pre-compiled standalone installers from the official GitHub releases page:</p>
+        <table>
+          <thead>
+            <tr>
+              <th>OS Platform</th>
+              <th>Format</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Windows</strong></td>
+              <td><code>.exe</code> / <code>.msi</code> / <code>.zip</code></td>
+              <td><a href="https://github.com/xtros/Muziso/releases/latest" style="color: var(--accent-neon);">Download Windows Package</a></td>
+            </tr>
+            <tr>
+              <td><strong>macOS</strong></td>
+              <td><code>.dmg</code> / <code>.app</code></td>
+              <td><a href="https://github.com/xtros/Muziso/releases/latest" style="color: var(--accent-neon);">Download macOS Package</a></td>
+            </tr>
+            <tr>
+              <td><strong>Linux</strong></td>
+              <td><code>.deb</code> / <code>.AppImage</code></td>
+              <td><a href="https://github.com/xtros/Muziso/releases/latest" style="color: var(--accent-neon);">Download Linux Package</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Developer Build Prerequisites</h3>
+        <p>To compile Muziso from source code, ensure you have Node.js 18+, Rust toolchain, and GStreamer dependencies installed:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>Windows PowerShell (Dependencies)</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>choco install gstreamer-runtime gstreamer-devel pkgconfiglite -y
+$env:PKG_CONFIG_PATH = "C:\gstreamer\1.0\msvc_x86_64\lib\pkgconfig"
+$env:GSTREAMER_1_0_ROOT_X86_64 = "C:\gstreamer\1.0\msvc_x86_64\"</code></pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>macOS Homebrew</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly pkg-config</code></pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>Ubuntu / Debian APT</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>sudo apt update && sudo apt install -y build-essential pkg-config libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev gstreamer1.0-plugins-ugly libwebkit2gtk-4.1-dev</code></pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>Build & Run Development Server</span>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><code>git clone https://github.com/xtros/Muziso.git
+cd Muziso
+npm install
+npm run tauri dev</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: ARCHITECTURE -->
+    <section id="architecture" class="doc-section">
+      <div class="card" style="margin-bottom: 2rem;">
+        <h3>System Architecture Overview</h3>
+        <p>Muziso operates on a decoupled client-backend design. The web view (React 19) interacts with the Rust Tauri backend using IPC commands, while audio streaming is managed by native GStreamer FFI and rodio bindings.</p>
+        
+        <div class="arch-diagram">
+          <div class="arch-nodes">
+            <div class="arch-node active-node">
+              <h4>React 19 Frontend</h4>
+              <span>Glassmorphic UI & Queue</span>
+            </div>
+            <div class="arch-arrow">&rarr;</div>
+            <div class="arch-node">
+              <h4>Tauri v2 IPC</h4>
+              <span>Rust Commands & State</span>
+            </div>
+            <div class="arch-arrow">&rarr;</div>
+            <div class="arch-node active-node">
+              <h4>GStreamer / Rodio</h4>
+              <span>Native Audio FFI Pipeline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>SQLite Persistence (<code>rusqlite</code>)</h3>
+          <p>Muziso maintains a local SQLite database (<code>muziso.db</code>) storing user library metadata, play history, playlist items, and offline track indices for instantaneous startup.</p>
+        </div>
+        <div class="card">
+          <h3>Sidecar Process Isolation</h3>
+          <p>Online audio resolution is delegated to platform-specific <code>yt-dlp</code> binaries bundle in <code>src-tauri/bin/</code>, executing under strict sandbox constraints.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: API -->
+    <section id="api" class="doc-section">
+      <div class="card">
+        <h3>Key Tauri IPC Commands</h3>
+        <p>The following Rust IPC functions are exposed to the React frontend via <code>@tauri-apps/api/core</code>:</p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>IPC Command</th>
+              <th>Arguments</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>init_gstreamer</code></td>
+              <td>None</td>
+              <td>Initializes GStreamer pipeline and injects runtime DLL environment paths on Windows.</td>
+            </tr>
+            <tr>
+              <td><code>resolve_stream_url</code></td>
+              <td><code>url: String</code></td>
+              <td>Invokes <code>yt-dlp</code> sidecar to extract high-bitrate direct audio URLs.</td>
+            </tr>
+            <tr>
+              <td><code>scan_local_directory</code></td>
+              <td><code>path: String</code></td>
+              <td>Recursively parses audio metadata tags using <code>lofty</code> and indexes tracks into SQLite.</td>
+            </tr>
+            <tr>
+              <td><code>update_discord_rpc</code></td>
+              <td><code>title: String, artist: String</code></td>
+              <td>Updates active Discord user status activity card with track details.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 6: BUG BOUNTY -->
+    <section id="bug-bounty" class="doc-section">
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Bug Hunter Reward Program</h3>
+        <p style="margin-bottom: 1.5rem;">Help improve Muziso! We reward community members who discover functional audio playback bugs, UI glitches, or security vulnerabilities.</p>
+        
+        <h3>How to Report:</h3>
+        <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.8;">
+          <li>Check open issues on <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Issues</a> to ensure it hasn't been submitted.</li>
+          <li>Submit a new issue containing OS specifications, Muziso version, reproduction steps, and console/system logs.</li>
+          <li>Confirmed bug reports earn contributor recognition and rewards!</li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE">MIT License</a>.</p>
+      <p style="margin-top: 0.5rem;">Built with ❤️ by <a href="https://github.com/xtros">Webs By JTS</a> using Tauri v2 & React 19.</p>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('onclick').includes(tabId)) {
+          btn.classList.add('active');
+        }
+      });
+      document.querySelectorAll('.doc-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      const target = document.getElementById(tabId);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+
+    function copyCode(btn) {
+      const codeBlock = btn.closest('.code-block').querySelector('code').innerText;
+      navigator.clipboard.writeText(codeBlock).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = 'Copied!';
+        btn.style.color = '#ccff00';
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.color = '';
+        }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
