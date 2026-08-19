@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/dashboard.png" alt="Muziso Showcase" width="100%" />
+  <img src="assets/dashboard.png" alt="Muziso Dashboard" width="70%" />
 </p>
 
 <p align="center">
@@ -60,7 +60,7 @@
 ## 🎧 Immersive Fullscreen Audio Player
 
 <p align="center">
-  <img src="assets/player.png" alt="Muziso Immersive Fullscreen Audio Player" width="100%" />
+  <img src="assets/player.png" alt="Muziso Audio Player" width="70%" />
 </p>
 
 - 🌌 **Ambient Dynamic Artwork Blur**: Real-time ambient background glow matching the colors of the active track artwork.
@@ -76,7 +76,7 @@
 ## 👤 Account Profile & Listening Statistics
 
 <p align="center">
-  <img src="assets/profile.png" alt="Muziso Account Profile & Analytics" width="100%" />
+  <img src="assets/profile.png" alt="Muziso Account Profile" width="70%" />
 </p>
 
 - 🛡️ **Account & Avatar Customization**: Custom user profile picture, avatar uploader, and active membership status badge.
@@ -86,7 +86,7 @@
 ## 🎚️ 10-Band Graphic Equalizer & Studio DSP Processing
 
 <p align="center">
-  <img src="assets/equalizer.png" alt="Muziso 10-Band Graphic Equalizer & Studio DSP" width="100%" />
+  <img src="assets/equalizer.png" alt="Muziso Graphic Equalizer" width="70%" />
 </p>
 
 - 🎛️ **10-Band Precision Control**: Fine-tune frequencies from 31Hz (Sub Bass) to 16kHz (Air) with real-time (+12 dB / -24 dB) gain adjustments.
@@ -96,7 +96,7 @@
 ## 📂 Your Library & Custom Playlists
 
 <p align="center">
-  <img src="assets/library.png" alt="Muziso Your Library View" width="100%" />
+  <img src="assets/library.png" alt="Muziso Your Library" width="70%" />
 </p>
 
 - 📁 **Local Music Import**: Import local music folders (`.mp3`, `.m4a`, `.flac`, `.wav`, `.opus`) with automatic tag indexing.
