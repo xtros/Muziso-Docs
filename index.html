@@ -1036,6 +1036,114 @@ npm run tauri dev</code></pre>
           <li>Confirmed bug reports earn contributor recognition and rewards!</li>
         </ol>
       </div>
+    <!-- TAB 7: PRIVACY POLICY -->
+    <section id="privacy" class="doc-section">
+      <div class="card" style="margin-bottom: 2rem;">
+        <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Muziso Privacy Policy
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; App Version: v0.1.8</p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">🛡️ Overview &amp; Privacy Commitment</h3>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+          <strong>Muziso</strong> ("the Application") is an open-source desktop music player created by <strong>Webs By JTS</strong>. We respect your privacy and are committed to protecting your personal data. Muziso is designed around a <strong>privacy-first, offline-capable architecture</strong>. The Application does <strong>not</strong> collect, store, or sell your personal information, browsing history, listening habits, or library metadata.
+        </p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 1rem;">📊 Data Collection &amp; Usage</h3>
+        <div style="color: var(--text-muted); line-height: 1.8;">
+          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">1. Local Storage &amp; Database (<code>muziso.db</code>)</h4>
+          <p style="margin-bottom: 1.25rem;">All user data—including liked songs, playlists, play counts, history, and app preferences—is stored <strong>100% locally</strong> on your device inside an encrypted/sandboxed SQLite database (<code>muziso.db</code>). This data never leaves your computer and is not transmitted to external analytics servers.</p>
+          
+          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">2. External Audio Stream &amp; Metadata Resolution</h4>
+          <p style="margin-bottom: 1.25rem;">When you stream online audio or view artist discographics, Muziso sends direct requests to public music providers (e.g., JioSaavn, Spotify Web API, YouTube via <code>yt-dlp</code> sidecar). Requests contain only necessary query parameters (track/artist title, song ID, regional language headers). No user identification tokens, email addresses, or personal accounts are transmitted during audio stream resolution.</p>
+
+          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">3. Optional Features</h4>
+          <ul style="margin-left: 1.5rem;">
+            <li><strong>Discord Rich Presence (<code>discord-rich-presence</code>)</strong>: If enabled in App Settings, Muziso broadcasts your current playing track title, artist name, and duration to the local Discord client running on your machine. This feature is opt-in and can be toggled off at any time.</li>
+            <li><strong>Software Update Checker (<code>tauri-plugin-updater</code>)</strong>: Muziso checks GitHub Releases for software updates using Tauri's updater plugin. This check fetches public release metadata to determine if a newer version is available.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">🚫 Zero Analytics &amp; Tracking</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Muziso contains <strong>zero telemetry</strong>, <strong>zero analytics scripts</strong>, and <strong>zero tracking pixels</strong>. We do not use Google Analytics, Mixpanel, Sentry, or any telemetry services.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">🔐 Children's Privacy</h3>
+          <p style="color: var(--text-muted); line-height: 1.7;">
+            Muziso is suitable for users of all ages. Because we do not collect any personal data, we do not knowingly request or store data from children under 13.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">📬 Contact Information</h3>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+          For questions regarding this Privacy Policy or app security, please open an issue on the <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Issues</a> page or contact <strong>Webs By JTS</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- TAB 8: TERMS & CONDITIONS -->
+    <section id="terms" class="doc-section">
+      <div class="card" style="margin-bottom: 2rem;">
+        <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Muziso Terms &amp; Conditions of Service
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; App Version: v0.1.8</p>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">📜 Acceptance of Terms</h3>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+          By downloading, installing, or using <strong>Muziso</strong> ("the Application"), developed by <strong>Webs By JTS</strong>, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not install or use the Application.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.75rem;">🔓 License &amp; Open-Source Terms</h3>
+          <ul style="margin-left: 1.25rem; color: var(--text-muted); line-height: 1.8;">
+            <li><strong>MIT License</strong>: Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" style="color: var(--accent-neon);">MIT License</a>.</li>
+            <li><strong>Permissions</strong>: Granted full permission to run, modify, compile, and distribute copies for personal, educational, or commercial use.</li>
+            <li><strong>Source Code</strong>: Publicly accessible on the <a href="https://github.com/xtros/Muziso" style="color: var(--accent-neon);">Muziso GitHub Repository</a>.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.75rem;">🎧 Fair Use &amp; Disclaimers</h3>
+          <ul style="margin-left: 1.25rem; color: var(--text-muted); line-height: 1.8;">
+            <li><strong>Aggregator Layer</strong>: Functions as an aggregator client and user-interface layer for local audio and public online music services (JioSaavn, Spotify Web API, <code>yt-dlp</code>).</li>
+            <li><strong>Media Ownership</strong>: All trademarks, song titles, cover art, and streams remain property of respective owners and publishers.</li>
+            <li><strong>No Hosting</strong>: Muziso does not host, upload, or monetize copyrighted audio files.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">⚡ Software Warranty &amp; Disclaimer</h3>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+          Muziso is provided <strong>"AS IS"</strong>, without warranty of any kind, express or implied. In no event shall the authors, copyright holders, or contributors be liable for any claim, damages, data loss, or other liability arising from the use of the Application.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">📬 Updates &amp; Contact</h3>
+        <p style="color: var(--text-muted); line-height: 1.7;">
+          We reserve the right to update the Application and revise these Terms at any time. For legal inquiries, please visit the <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Repository</a> or contact <strong>Webs By JTS</strong>.
+        </p>
+      </div>
     </section>
 
   </main>
@@ -1044,11 +1152,11 @@ npm run tauri dev</code></pre>
   <footer>
     <div class="container">
       <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
-        <a href="docs/PRIVACY.md">Privacy Policy</a>
-        <a href="docs/TERMS.md">Terms &amp; Conditions</a>
-        <a href="https://github.com/xtros/Muziso/blob/main/LICENSE">MIT License</a>
-        <a href="https://github.com/xtros/Muziso/issues">Report a Bug</a>
-        <a href="https://github.com/xtros/Muziso">GitHub</a>
+        <a href="privacy.html" onclick="switchTab('privacy', event)">Privacy Policy</a>
+        <a href="terms.html" onclick="switchTab('terms', event)">Terms &amp; Conditions</a>
+        <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" target="_blank">MIT License</a>
+        <a href="https://github.com/xtros/Muziso/issues" target="_blank">Report a Bug</a>
+        <a href="https://github.com/xtros/Muziso" target="_blank">GitHub</a>
       </div>
       <p>Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE">MIT License</a>.</p>
       <p style="margin-top: 0.5rem;">Built with ❤️ by <a href="https://github.com/xtros">Webs By JTS</a> using Tauri v2 &amp; React 19.</p>

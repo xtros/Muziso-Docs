@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muziso Terms & Conditions - Official Documentation</title>
+  <meta name="description" content="Official Terms & Conditions of Service for Muziso Desktop Music Player." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #000000;
+      --bg-surface: #0a0a0a;
+      --bg-card: rgba(24, 24, 27, 0.75);
+      --bg-card-hover: rgba(39, 39, 42, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(255, 255, 255, 0.35);
+      --accent-neon: #ffffff;
+      --accent-neon-glow: rgba(255, 255, 255, 0.2);
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --text-dark: #18181b;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Sleek Cyber-Minimal Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(10, 10, 12, 0.95);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 999px;
+      border: 2px solid rgba(10, 10, 12, 0.95);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.5);
+    }
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) rgba(10, 10, 12, 0.95);
+    }
+
+    body {
+      background-color: var(--bg-base);
+      background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.85) 100%), url('assets/bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Ambient Background Effects */
+    .glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.25;
+    }
+    .orb-1 {
+      width: 500px;
+      height: 500px;
+      background: #ffffff;
+      opacity: 0.08;
+      top: -100px;
+      left: -100px;
+    }
+    .orb-2 {
+      width: 600px;
+      height: 600px;
+      background: #666666;
+      opacity: 0.06;
+      bottom: -200px;
+      right: -100px;
+    }
+
+    /* Layout Wrapper */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 9, 11, 0.8);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: #fff;
+    }
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+    }
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent-neon);
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-neon);
+      color: var(--text-dark);
+      padding: 0.55rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 15px var(--accent-neon-glow);
+    }
+    .nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
+    }
+
+    /* Content Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .card {
+      background: rgba(18, 18, 22, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 0;
+      margin-top: 5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--accent-neon);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/logo.png" alt="Muziso Logo" class="brand-logo-img" />
+        <div class="brand-title">Muziso</div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#overview">Overview</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#installation">Installation</a></li>
+        <li><a href="index.html#architecture">Architecture</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html" class="active">Terms &amp; Conditions</a></li>
+      </ul>
+      <a href="https://github.com/xtros/Muziso" target="_blank" class="nav-btn">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub Repository
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container" style="padding-top: 2.5rem;">
+    <div class="card" style="margin-bottom: 2rem;">
+      <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Muziso Terms &amp; Conditions of Service
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; App Version: v0.1.8</p>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">📜 Acceptance of Terms</h3>
+      <p style="color: var(--text-muted); line-height: 1.7;">
+        By downloading, installing, or using <strong>Muziso</strong> ("the Application"), developed by <strong>Webs By JTS</strong>, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not install or use the Application.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.75rem;">🔓 License &amp; Open-Source Terms</h3>
+        <ul style="margin-left: 1.25rem; color: var(--text-muted); line-height: 1.8;">
+          <li><strong>MIT License</strong>: Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" style="color: var(--accent-neon);">MIT License</a>.</li>
+          <li><strong>Permissions</strong>: Granted full permission to run, modify, compile, and distribute copies for personal, educational, or commercial use.</li>
+          <li><strong>Source Code</strong>: Publicly accessible on the <a href="https://github.com/xtros/Muziso" style="color: var(--accent-neon);">Muziso GitHub Repository</a>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.75rem;">🎧 Fair Use &amp; Disclaimers</h3>
+        <ul style="margin-left: 1.25rem; color: var(--text-muted); line-height: 1.8;">
+          <li><strong>Aggregator Layer</strong>: Functions as an aggregator client and user-interface layer for local audio and public online music services (JioSaavn, Spotify Web API, <code>yt-dlp</code>).</li>
+          <li><strong>Media Ownership</strong>: All trademarks, song titles, cover art, and streams remain property of respective owners and publishers.</li>
+          <li><strong>No Hosting</strong>: Muziso does not host, upload, or monetize copyrighted audio files.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">⚡ Software Warranty &amp; Disclaimer</h3>
+      <p style="color: var(--text-muted); line-height: 1.7;">
+        Muziso is provided <strong>"AS IS"</strong>, without warranty of any kind, express or implied. In no event shall the authors, copyright holders, or contributors be liable for any claim, damages, data loss, or other liability arising from the use of the Application.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">📬 Updates &amp; Contact</h3>
+      <p style="color: var(--text-muted); line-height: 1.7;">
+        We reserve the right to update the Application and revise these Terms at any time. For legal inquiries, please visit the <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Repository</a> or contact <strong>Webs By JTS</strong>.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" target="_blank">MIT License</a>
+        <a href="https://github.com/xtros/Muziso/issues" target="_blank">Report a Bug</a>
+        <a href="https://github.com/xtros/Muziso" target="_blank">GitHub</a>
+      </div>
+      <p>Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE">MIT License</a>.</p>
+      <p style="margin-top: 0.5rem;">Built with ❤️ by <a href="https://github.com/xtros">Webs By JTS</a> using Tauri v2 &amp; React 19.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
