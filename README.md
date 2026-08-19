@@ -1,6 +1,10 @@
 # 🎵 Muziso
 
 <p align="center">
+  <img src="assets/logo.png" alt="Muziso Official Logo" width="160" />
+</p>
+
+<p align="center">
   <img src="https://i.postimg.cc/yYvXBWK5/Muziso.png" alt="Muziso Showcase" width="100%" />
 </p>
 

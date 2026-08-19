@@ -102,19 +102,27 @@
       text-decoration: none;
       color: #fff;
     }
-    .brand-logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #ffffff, #666666);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-heading);
-      font-weight: 900;
-      color: #000;
-      font-size: 1.25rem;
-      box-shadow: 0 0 15px var(--accent-neon-glow);
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+      transition: transform 0.25s ease;
+    }
+    .brand-logo-img:hover {
+      transform: scale(1.1);
+    }
+    .hero-logo-img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.3));
+      animation: floatLogo 5s ease-in-out infinite alternate;
+    }
+    @keyframes floatLogo {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-8px) scale(1.03); }
     }
     .brand-title {
       font-family: var(--font-heading);
@@ -505,7 +513,7 @@
   <header>
     <div class="container nav-inner">
       <a href="#" class="brand">
-        <div class="brand-logo">M</div>
+        <img src="assets/logo.png" alt="Muziso Logo" class="brand-logo-img" />
         <div class="brand-title">Muziso</div>
         <span class="brand-tag">v0.1.8</span>
       </a>
