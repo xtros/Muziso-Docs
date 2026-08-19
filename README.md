@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img src="https://i.postimg.cc/yYvXBWK5/Muziso.png" alt="Muziso Showcase" width="100%" />
+  <img src="assets/dashboard.png" alt="Muziso Showcase" width="100%" />
 </p>
 
 <p align="center">
