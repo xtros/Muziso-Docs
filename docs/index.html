@@ -515,7 +515,7 @@
       <a href="#" class="brand">
         <img src="assets/logo.png" alt="Muziso Logo" class="brand-logo-img" />
         <div class="brand-title">Muziso</div>
-        <span class="brand-tag" id="app-version">v0.1.8</span>
+        <span class="brand-tag" id="app-version" style="display: none;"></span>
       </a>
       <ul class="nav-links">
         <li><a href="#overview" onclick="switchTab('overview')">Overview</a></li>
@@ -883,10 +883,15 @@ npm run tauri dev</code></pre>
       .then(data => {
         if (data && data.tag_name) {
           const versionEl = document.getElementById('app-version');
-          if (versionEl) versionEl.innerText = data.tag_name;
+          if (versionEl) {
+            versionEl.innerText = data.tag_name;
+            versionEl.style.display = 'inline-flex';
+          }
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        // If offline or unreachable, badge remains hidden (showing only the name)
+      });
   
   </script>
 
