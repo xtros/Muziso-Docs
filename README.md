@@ -56,6 +56,13 @@
 
 <table>
   <tr>
+    <td align="center" colspan="2" width="100%">
+      <b>🏠 Main Dashboard &amp; High-Res Music Explorer</b><br/>
+      <sub>Trending charts, 320 kbps JioSaavn direct streaming &amp; instant search</sub><br/><br/>
+      <img src="assets/dashboard.png" alt="Muziso Main Dashboard" width="100%" />
+    </td>
+  </tr>
+  <tr>
     <td align="center" width="50%">
       <b>🎧 Immersive Fullscreen Audio Player</b><br/>
       <sub>Ambient artwork blur &amp; 3D vinyl disc animation</sub><br/><br/>
