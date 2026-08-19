@@ -67,6 +67,19 @@
 - 💿 **3D Vinyl Record Animation**: Interactive spinning vinyl disc popping out behind high-res cover art.
 - 🎛️ **Full Playback Controls**: Scrubber timeline, volume controller, shuffle/repeat toggles, queue drawer, and history shortcuts.
 
+
+---
+
+## 🎚️ 10-Band Graphic Equalizer & Studio DSP Processing
+
+<p align="center">
+  <img src="assets/equalizer.png" alt="Muziso 10-Band Graphic Equalizer & Studio DSP" width="100%" />
+</p>
+
+- 🎛️ **10-Band Precision Control**: Fine-tune frequencies from 31Hz (Sub Bass) to 16kHz (Air) with real-time (+12 dB / -24 dB) gain adjustments.
+- 📊 **Real-time Frequency Response Curve**: Live visual feedback graph illustrating your acoustic output curve.
+- 🎚️ **Built-in Studio Presets**: 1-click preset switching including `Flat`, `Bass Boost`, `Treble Boost`, `Electronic`, `Rock`, `Pop`, `Vocal`, `Classical`, and `Jazz`.
+
 ## 📂 Your Library & Custom Playlists
 
 <p align="center">
