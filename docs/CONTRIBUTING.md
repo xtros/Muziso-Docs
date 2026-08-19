@@ -30,7 +30,7 @@ Found a functional playback bug, stream resolution failure, or UI glitch in **Mu
 
 3. **Code Style Standards**:
    - **Frontend**: Follow React 19 functional component standards, TypeScript strict typing, and Framer Motion transitions.
-   - **Styling**: Maintain the signature glassmorphic cyber-minimal dark palette (`#09090b` background, `#ccff00` neon accent).
+   - **Styling**: Maintain the signature cyber-minimal dark palette (`#09090b` background, `#ccff00` neon accent).
    - **Backend**: Adhere to standard Rust code formatting (`cargo fmt`) and check for warnings (`cargo check`, `cargo clippy`).
    - **Deduplication Rules**: Use `getSmartDedupKey` / `clean_dedup_key` for version-preserving song deduplication.
 

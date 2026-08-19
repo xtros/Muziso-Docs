@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <b>Muziso</b> is a premium, dark-themed, glassmorphic desktop music player built for modern listeners. Powered by a high-performance <b>React 19 (TypeScript)</b> + <b>Rust (Tauri v2)</b> engine, Muziso combines sub-30ms 320 kbps JioSaavn direct streaming, smart version-preserving deduplication, guaranteed official album artwork, local library playback, and offline caching.
+  <b>Muziso</b> is a premium, dark-themed, desktop music player built for modern listeners. Powered by a high-performance <b>React 19 (TypeScript)</b> + <b>Rust (Tauri v2)</b> engine, Muziso combines sub-30ms 320 kbps JioSaavn direct streaming, smart version-preserving deduplication, guaranteed official album artwork, local library playback, and offline caching.
 </p>
 
 <p align="center">
@@ -47,7 +47,7 @@
 - 🎶 **Autoplay Queue & Recommended "Play All"**: View upcoming autoplay recommendations inside the Play Queue drawer and start playing all recommended tracks with 1 click.
 - 🎧 **Hybrid Audio Engine**: Play local music collections (`.mp3`, `.m4a`, `.wav`, `.opus`, `.flac`) alongside dynamic online streams.
 - 📥 **Offline Download & Library Management**: Save tracks locally for immediate offline playback with custom metadata and artwork indexing.
-- 🎨 **Glassmorphic Cyber-Minimal UI**: High-fidelity dark mode with signature neon branding (`#ccff00`), smooth Framer Motion transitions, custom modal overlays, and responsive routing resets.
+- 🎨 **Cyber-Minimal UI**: High-fidelity dark mode with signature neon branding (`#ccff00`), smooth Framer Motion transitions, custom modal overlays, and responsive routing resets.
 
 ---
 

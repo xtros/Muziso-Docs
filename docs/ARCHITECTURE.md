@@ -6,7 +6,7 @@
 
 ## Overview
 
-Muziso is built as a cross-platform desktop application leveraging **Tauri v2** for system integration and performance, **React 19 (TypeScript)** for its glassmorphic user interface, **JioSaavn & Spotify Web APIs** for instant audio stream resolution and official artwork, **GStreamer & Rodio** for native audio decoding and FFI playback, and **SQLite (`rusqlite`)** for local metadata persistence.
+Muziso is built as a cross-platform desktop application leveraging **Tauri v2** for system integration and performance, **React 19 (TypeScript)** for its modern user interface, **JioSaavn & Spotify Web APIs** for instant audio stream resolution and official artwork, **GStreamer & Rodio** for native audio decoding and FFI playback, and **SQLite (`rusqlite`)** for local metadata persistence.
 
 ---
 
