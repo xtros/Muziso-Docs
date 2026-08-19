@@ -70,6 +70,19 @@
 
 ---
 
+
+---
+
+## 👤 Account Profile & Listening Statistics
+
+<p align="center">
+  <img src="assets/profile.png" alt="Muziso Account Profile & Analytics" width="100%" />
+</p>
+
+- 🛡️ **Account & Avatar Customization**: Custom user profile picture, avatar uploader, and active membership status badge.
+- 📊 **Real-time Listening Statistics**: Live counters tracking saved recent tracks, total liked songs, and active account verification.
+- 🔑 **Secure Authentication & Management**: Instant 1-click Sign Out, profile editing, and local session management.
+
 ## 🎚️ 10-Band Graphic Equalizer & Studio DSP Processing
 
 <p align="center">
