@@ -524,15 +524,8 @@
       object-fit: contain;
       display: block;
     }
-    .card .hero-dashboard-preview {
-      max-width: 520px;
-      margin: 1rem auto 0;
-    }
-    .card .dashboard-img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
+    .card .hero-dashboard-preview { max-height: 200px; margin: 0.75rem 0 0; }
+    .card .dashboard-img { width: 100%; height: auto; max-height: 200px; object-fit: contain; }
   </style>
 </head>
 <body>
@@ -631,11 +624,31 @@
         </div>
       </div>
 
-      <div class="card" style="margin-top: 2.5rem;">
-        <h3>🎧 Immersive Fullscreen Audio Player</h3>
-        <p style="margin-bottom: 1.25rem;">Immerse yourself in music with dynamic ambient background artwork blur, spinning 3D vinyl record animations, and high-fidelity controls.</p>
-        <div class="hero-dashboard-preview" style="margin: 1rem auto 0;">
-          <img src="assets/player.png" alt="Muziso Immersive Fullscreen Audio Player" class="dashboard-img" />
+      <h3 style="margin-top: 3rem; margin-bottom: 1.25rem; font-family: var(--font-heading); font-size: 1.4rem; color: #fff;">📸 App Showcase Gallery</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🎧</div>
+          <h3>Immersive Player</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Ambient artwork blur & 3D vinyl record disc.</p>
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+            <img src="assets/player.png" alt="Muziso Immersive Audio Player" class="dashboard-img" />
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📂</div>
+          <h3>Your Library</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Local music folders, Liked Songs & playlists.</p>
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+            <img src="assets/library.png" alt="Muziso Your Library" class="dashboard-img" />
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎚️</div>
+          <h3>Graphic Equalizer</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">10-band DSP curve & genre studio presets.</p>
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+            <img src="assets/equalizer.png" alt="Muziso Graphic Equalizer" class="dashboard-img" />
+          </div>
         </div>
       </div>
     </section>
@@ -675,27 +688,31 @@
         </div>
       </div>
 
-      <div class="card" style="margin-top: 2.5rem;">
-        <h3>📂 Your Library & Playlist Management</h3>
-        <p style="margin-bottom: 1.25rem;">Import local music files, manage Liked Songs, and organize custom playlists with instant metadata tag indexing.</p>
-        <div class="hero-dashboard-preview" style="margin: 1rem auto 0;">
-          <img src="assets/library.png" alt="Muziso Your Library View" class="dashboard-img" />
+      <h3 style="margin-top: 3rem; margin-bottom: 1.25rem; font-family: var(--font-heading); font-size: 1.4rem; color: #fff;">📸 Feature Visual Previews</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">👤</div>
+          <h3>Account Profile</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Avatar customization & listening stats.</p>
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+            <img src="assets/profile.png" alt="Muziso Account Profile" class="dashboard-img" />
+          </div>
         </div>
-      </div>
-
-      <div class="card" style="margin-top: 2rem;">
-        <h3>🎚️ 10-Band Graphic Equalizer & Studio Audio DSP</h3>
-        <p style="margin-bottom: 1.25rem;">Precision audio sculpting with a 10-band graphic equalizer (31Hz - 16kHz), live frequency curve graph, and studio presets.</p>
-        <div class="hero-dashboard-preview" style="margin: 1rem auto 0;">
-          <img src="assets/equalizer.png" alt="Muziso 10-Band Graphic Equalizer" class="dashboard-img" />
+        <div class="card">
+          <div class="card-icon">📂</div>
+          <h3>Library Management</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Local song scanner & playlist uploader.</p>
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+            <img src="assets/library.png" alt="Muziso Library View" class="dashboard-img" />
+          </div>
         </div>
-      </div>
-
-      <div class="card" style="margin-top: 2rem;">
-        <h3>👤 Account Profile & Listening Statistics</h3>
-        <p style="margin-bottom: 1.25rem;">Manage user avatar, active membership status, saved recents, liked track counters, and account authentication.</p>
-        <div class="hero-dashboard-preview" style="margin: 1rem auto 0;">
-          <img src="assets/profile.png" alt="Muziso Account Profile View" class="dashboard-img" />
+        <div class="card">
+          <div class="card-icon">🎚️</div>
+          <h3>10-Band Equalizer</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Studio DSP curve & frequency faders.</p>
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+            <img src="assets/equalizer.png" alt="Muziso Equalizer" class="dashboard-img" />
+          </div>
         </div>
       </div>
     </section>
