@@ -54,6 +54,19 @@
 
 ---
 
+
+---
+
+## 🎧 Immersive Fullscreen Audio Player
+
+<p align="center">
+  <img src="assets/player.png" alt="Muziso Immersive Fullscreen Audio Player" width="100%" />
+</p>
+
+- 🌌 **Ambient Dynamic Artwork Blur**: Real-time ambient background glow matching the colors of the active track artwork.
+- 💿 **3D Vinyl Record Animation**: Interactive spinning vinyl disc popping out behind high-res cover art.
+- 🎛️ **Full Playback Controls**: Scrubber timeline, volume controller, shuffle/repeat toggles, queue drawer, and history shortcuts.
+
 ## 📂 Your Library & Custom Playlists
 
 <p align="center">
