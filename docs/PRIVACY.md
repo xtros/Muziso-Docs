@@ -49,7 +49,7 @@ Muziso is suitable for users of all ages. Because we do not collect any personal
 
 ## 📜 Changes to This Policy
 
-We may update this Privacy Policy to reflect future software enhancements. Any modifications will be documented in official release notes and updated on the [GitHub Documentation Site](https://xtros.github.io/Muziso/).
+We may update this Privacy Policy to reflect future software enhancements. Any modifications will be documented in official release notes and updated on the [GitHub Documentation Site](https://xtros.github.io/Muziso-Docs/).
 
 ---
 
