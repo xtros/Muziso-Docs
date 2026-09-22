@@ -1,17 +1,21 @@
 # 🏗️ Muziso Architecture Documentation
 
 **Current Version:** v0.1.8  
+**Supported Ecosystems:** Desktop (Windows, macOS, Linux) &amp; Mobile (Android)
 
 ---
 
-## Overview
+## 🌟 Ecosystem Overview
 
-Muziso is built as a cross-platform desktop application leveraging **Tauri v2** for system integration and performance, **React 19 (TypeScript)** for its modern user interface, **JioSaavn & Spotify Web APIs** for instant audio stream resolution and official artwork, **GStreamer & Rodio** for native audio decoding and FFI playback, and **SQLite (`rusqlite`)** for local metadata persistence.
+Muziso is engineered across two dedicated native architectures tailored for high-fidelity audio playback:
+1. **Desktop Engine**: Built with **React 19 (TypeScript)** + **Tauri v2 (Rust)** + **GStreamer FFI** + **SQLite (`rusqlite`)**.
+2. **Mobile Engine**: Built with **Native Android (Kotlin)** + **Jetpack Media3 / ExoPlayer** + **MediaSessionCompat Foreground Service** + **Room SQLite Database**.
 
 ---
 
 ## 🏛️ High-Level System Architecture
 
+### 💻 Desktop Architecture (Tauri v2 + Rust)
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                       React 19 Frontend                         │
@@ -29,64 +33,69 @@ Muziso is built as a cross-platform desktop application leveraging **Tauri v2** 
 └─────────────────────┴──────────────────┴────────────────────────┘
 ```
 
+### 📱 Mobile Architecture (Android Kotlin)
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Native Kotlin UI Layer                      │
+│        (Jetpack Compose / ViewBinding, MVI Architecture)        │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │  ViewModel & Kotlin StateFlow
+┌────────────────────────────────▼────────────────────────────────┐
+│                   Foreground Audio Service                      │
+│            (MediaSessionCompat, Audio Focus Manager)            │
+├─────────────────────┬──────────────────┬────────────────────────┤
+│ Playback Engine     │ Persistence      │ Network & CDN          │
+│ - Jetpack Media3    │ - Room Database  │ - OkHttp Client        │
+│ - ExoPlayer 320kbps │ - Encrypted DAO  │ - JioSaavn API Engine  │
+│ - Hardware Offload  │ - Offline Cache  │ - Spotify Art Resolver │
+└─────────────────────┴──────────────────┴────────────────────────┘
+```
+
 ---
 
 ## 🎧 Audio Engine & Stream Resolvers
 
-Muziso implements a multi-tier hybrid audio resolution pipeline:
+Muziso implements a multi-tier hybrid audio resolution pipeline across Desktop and Mobile:
 
-1. **JioSaavn 320 kbps Direct CDN Resolver (`jiosaavn.rs`)**:
+1. **JioSaavn 320 kbps Direct CDN Resolver**:
    - Audio URLs are resolved in **<30ms** via Strategy 0 direct API lookup (`song.getDetails&pids={id}`).
-   - Streams are fetched directly from high-speed 320 kbps CDN endpoints without intermediary conversion steps.
+   - Streams are fetched directly from high-speed 320 kbps CDN endpoints without intermediary transcoding delay.
 
-2. **Stream Resolution Engine (`yt-dlp` sidecar)**:
-   - For YouTube/SoundCloud URLs, direct audio streams are resolved on-demand via a sandboxed `yt-dlp` sidecar binary located in `src-tauri/bin/yt-dlp.exe`.
-
-3. **Native GStreamer & Rodio Audio Pipeline (`audio.rs`)**:
+2. **Native GStreamer Audio Pipeline (Desktop)**:
    - Decodes high-bitrate network streams (`.mp3`, `.flac`, `.opus`, `.m4a`, `.wav`) using native Rust GStreamer FFI bindings.
    - Dynamically injects bundled GStreamer dynamic libraries (`.dll`) at runtime on Windows.
 
+3. **Jetpack Media3 & ExoPlayer Pipeline (Android Mobile)**:
+   - Leverages hardware audio offloading and gapless buffer preloading.
+   - Coordinates with `MediaSessionCompat` to keep background music active while device is locked.
+
 ---
 
-## 🎨 Guaranteed Official Cover Image Engine (`news.rs` & `spotify.rs`)
+## 🎨 Guaranteed Official Cover Image Engine
 
-1. **Deep Field Extraction**:
+1. **Deep Metadata Extraction**:
    - Parses `item["image"]`, `item["more_info"]["image"]`, `item["more_info"]["album_image"]`, and `item["album_image"]`, scaling thumbnails up to **500x500 official high-res album covers**.
 
 2. **Spotify Cover Enrichment Resolver**:
-   - Any track lacking a cover image is enriched asynchronously via Spotify's official Web API (`fetch_spotify_cover_image`), returning verified **640x640 album artwork**.
+   - Any track lacking a verified cover image is enriched asynchronously via Spotify's official Web API, returning verified **640x640 album artwork**.
 
 ---
 
-## 🔄 Smart Version-Preserving Deduplication Engine (`getSmartDedupKey` / `clean_dedup_key`)
+## 🔄 Smart Version-Preserving Deduplication Engine
 
-- **Compilation Collapse**: Strips movie/subtitle metadata tags (e.g. `(From "3")`, `(The Innocence of Love)`, `(Best of 2025)`) to collapse duplicate entries of the exact same audio track across different compilation albums into 1 single clean entry.
-- **Version Protection**: Preserves version descriptor keywords (`Remix`, `Reprise`, `Unplugged`, `Acoustic`, `Lofi`, `Extended`, `Instrumental`, `Tamil`, `Telugu`, `Hindi`, `Malayalam`, `Kannada`) so alternate versions remain accessible.
-
----
-
-## 👨‍🎤 Official Artist Discography Sourcing
-
-- Artist Pages query official studio albums and singles exclusively (`include_groups=album,single`), bypassing third-party playlists and compilations.
-- Strict performing-artist metadata filtering ensures only songs performed by the target artist are listed.
+- **Compilation Collapse**: Strips redundant album compilation prefixes to collapse duplicate entries of the same song across compilation albums into 1 clean listing.
+- **Version Protection**: Preserves version descriptor keywords (`Remix`, `Reprise`, `Unplugged`, `Acoustic`, `Lofi`, `Extended`, `Instrumental`, `Tamil`, `Telugu`, `Hindi`, `Malayalam`, `Kannada`) so alternate studio recordings remain distinct.
 
 ---
 
-## 💾 Local Storage & Database Schema (`muziso.db`)
+## 💾 Local Storage & Database Schema
 
-Muziso utilizes a local SQLite database (`muziso.db`) managed via `rusqlite` bundled with static compilation.
+All user data is stored strictly on the local client:
+- **Desktop**: SQLite database (`muziso.db`) managed via `rusqlite`.
+- **Mobile**: Room SQLite database with typed DAOs and Kotlin Flow observers.
 
 ### Key Entities:
-- **Tracks**: Stores track title, artist, album, duration, file path / stream URL, bitrate, cover art blob reference, and local file checksum.
-- **Playlists**: User-created playlists with custom ordering and artwork.
-- **Play History & Analytics**: Tracks play counts, skip ratios, and date timestamps for smart queue recommendations.
-- **Offline Cache**: Index of downloaded tracks stored in the user's `$APPDATA` directory.
-
----
-
-## 🎮 Discord Rich Presence (`discord_rpc.rs`)
-
-When enabled in app settings, Muziso broadcasts active playback state to Discord:
-- **Activity State**: Track title & Artist name
-- **Timestamps**: Elapsed track duration and total length
-- **Image Assets**: Muziso logo and album artwork references
+- **Tracks**: Title, artist, album, duration, file path / stream URL, bitrate, cover art blob reference, and local checksum.
+- **Playlists**: Custom user-ordered playlists and tags.
+- **Play History**: Local play counts and playback timestamps for smart autoplay recommendations.
+- **Offline Cache**: Registry of downloaded audio files stored in sandboxed local application directories.

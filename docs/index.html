@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Muziso Documentation - Modern desktop music player</title>
-  <meta name="description" content="Official documentation for Muziso: A high-performance, desktop music player powered by React 19, Tauri v2, GStreamer, and Rust." />
+  <title>Muziso Documentation - Desktop & Mobile Music Player</title>
+  <meta name="description" content="Official documentation for Muziso: A high-performance music player available on Desktop (React 19, Tauri v2, Rust, GStreamer) and Mobile (Native Android Kotlin, Jetpack Media3)." />
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +21,10 @@
       --border-glow: rgba(255, 255, 255, 0.35);
       --accent-neon: #ffffff;
       --accent-neon-glow: rgba(255, 255, 255, 0.2);
+      --accent-green: #ccff00;
+      --accent-green-glow: rgba(204, 255, 0, 0.25);
+      --accent-blue: #38bdf8;
+      --accent-purple: #a855f7;
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
       --text-dark: #18181b;
@@ -54,6 +58,7 @@
     html {
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.25) rgba(10, 10, 12, 0.95);
+      scroll-behavior: smooth;
     }
 
     body {
@@ -112,7 +117,7 @@
       z-index: 100;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      background: rgba(9, 9, 11, 0.8);
+      background: rgba(9, 9, 11, 0.85);
       border-bottom: 1px solid var(--border-subtle);
     }
     .nav-inner {
@@ -139,8 +144,8 @@
       transform: scale(1.1);
     }
     .hero-logo-img {
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       object-fit: contain;
       margin-bottom: 1.5rem;
       filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.3));
@@ -169,7 +174,7 @@
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.4rem;
       list-style: none;
     }
     .nav-links a {
@@ -204,33 +209,44 @@
 
     /* Hero Section */
     .hero {
-      padding: 5rem 0 3.5rem;
+      padding: 4.5rem 0 3rem;
       text-align: center;
+    }
+    .hero-badges-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
     }
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.4rem 1rem;
+      padding: 0.35rem 0.9rem;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
-      margin-bottom: 1.5rem;
+      backdrop-filter: blur(12px);
     }
     .hero-badge-dot {
       width: 8px;
       height: 8px;
-      background: var(--accent-neon);
+      background: var(--accent-green);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--accent-neon);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+    .hero-badge-dot.blue {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px var(--accent-blue);
     }
     .hero h1 {
       font-family: var(--font-heading);
-      font-size: 3.6rem;
+      font-size: 3.4rem;
       font-weight: 900;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -0.03em;
       margin-bottom: 1.25rem;
       background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
@@ -239,53 +255,187 @@
       -webkit-text-fill-color: transparent;
     }
     .hero h1 span {
-      background: linear-gradient(135deg, #ffffff 0%, #71717a 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
     .hero p {
-      max-width: 720px;
+      max-width: 740px;
       margin: 0 auto 2.5rem;
       font-size: 1.15rem;
       color: var(--text-muted);
       line-height: 1.7;
     }
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 3rem;
+
+    /* Dual Platform Download Hub Cards */
+    .download-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0 3rem;
+      text-align: left;
     }
-    .btn-lg {
-      padding: 0.85rem 2rem;
-      font-size: 1rem;
-      border-radius: 999px;
+    .hub-card {
+      background: rgba(18, 18, 22, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .hub-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+    }
+    .hub-card.desktop-hub::before {
+      background: linear-gradient(90deg, transparent, #ffffff, transparent);
+    }
+    .hub-card.mobile-hub::before {
+      background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+    }
+    .hub-card:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+    .hub-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .hub-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hub-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .hub-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
       font-weight: 700;
-      text-decoration: none;
+      color: #fff;
+    }
+    .hub-badge {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+    }
+    .hub-badge.mobile-badge {
+      background: rgba(204, 255, 0, 0.12);
+      border-color: rgba(204, 255, 0, 0.4);
+      color: var(--accent-green);
+    }
+    .hub-badge.desktop-badge {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #fff;
+    }
+    .hub-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+    .hub-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .btn-hub {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 0.5rem;
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
     }
-    .btn-primary {
-      background: var(--accent-neon);
-      color: #000;
-      box-shadow: 0 0 25px var(--accent-neon-glow);
+    .btn-hub-primary {
+      background: #ffffff;
+      color: #000000;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 35px rgba(255, 255, 255, 0.45);
+    .btn-hub-primary:hover {
+      background: #f0f0f0;
+      transform: translateY(-1px);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
     }
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
+    .btn-hub-green {
+      background: var(--accent-green);
+      color: #000000;
+      box-shadow: 0 0 15px var(--accent-green-glow);
+    }
+    .btn-hub-green:hover {
+      background: #d4ff1a;
+      transform: translateY(-1px);
+      box-shadow: 0 0 25px rgba(204, 255, 0, 0.45);
+    }
+    .btn-hub-outline {
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border-subtle);
+      color: var(--text-main);
     }
-    .btn-secondary:hover {
+    .btn-hub-outline:hover {
       background: rgba(255, 255, 255, 0.12);
-      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    /* Interactive Platform Filter Pills */
+    .filter-pill-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 1.5rem 0 2.5rem;
+    }
+    .filter-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.45rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .filter-pill.active {
+      background: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     /* Documentation Navigation Tabs */
@@ -324,7 +474,7 @@
     /* Content Sections */
     .doc-section {
       display: none;
-      padding-top: 2rem;
+      padding-top: 1rem;
       animation: fadeIn 0.3s ease-out forwards;
     }
     .doc-section.active {
@@ -355,15 +505,41 @@
       border: 1px solid var(--border-subtle);
       border-radius: 1.25rem;
       padding: 2rem;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
       transition: all 0.3s ease;
+      position: relative;
     }
     .card:hover {
       border-color: rgba(255, 255, 255, 0.3);
       transform: translateY(-3px);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
     }
+    .card-platform-pill {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .pill-desktop {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: var(--accent-blue);
+    }
+    .pill-mobile {
+      background: rgba(204, 255, 0, 0.15);
+      border: 1px solid rgba(204, 255, 0, 0.4);
+      color: var(--accent-green);
+    }
+    .pill-universal {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+    }
+
     .card-icon {
       width: 44px;
       height: 44px;
@@ -377,6 +553,11 @@
       font-size: 1.4rem;
       margin-bottom: 1.25rem;
     }
+    .card-icon.green {
+      color: var(--accent-green);
+      border-color: rgba(204, 255, 0, 0.35);
+      background: rgba(204, 255, 0, 0.1);
+    }
     .card h3 {
       font-family: var(--font-heading);
       font-size: 1.3rem;
@@ -388,6 +569,45 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
+    }
+
+    /* Sub Tabs for Installation / Architecture */
+    .subtabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.4rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      width: fit-content;
+    }
+    .subtab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .subtab-btn:hover {
+      color: #fff;
+    }
+    .subtab-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    .subtab-content {
+      display: none;
+    }
+    .subtab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
     }
 
     /* Code Blocks */
@@ -453,17 +673,24 @@
       border: 1px solid var(--border-subtle);
       padding: 1.25rem 1.5rem;
       border-radius: 1rem;
-      min-width: 180px;
+      min-width: 175px;
     }
     .arch-node.active-node {
       border-color: var(--accent-neon);
       box-shadow: 0 0 20px var(--accent-neon-glow);
     }
+    .arch-node.active-mobile {
+      border-color: var(--accent-green);
+      box-shadow: 0 0 20px var(--accent-green-glow);
+    }
     .arch-node h4 {
       font-family: var(--font-heading);
       font-size: 1.05rem;
-      color: var(--accent-neon);
+      color: #ffffff;
       margin-bottom: 0.25rem;
+    }
+    .arch-node.active-mobile h4 {
+      color: var(--accent-green);
     }
     .arch-node span {
       font-size: 0.8rem;
@@ -501,7 +728,7 @@
     }
     td code {
       font-family: var(--font-code);
-      color: var(--accent-neon);
+      color: var(--accent-green);
       background: rgba(255, 255, 255, 0.1);
       padding: 0.15rem 0.4rem;
       border-radius: 4px;
@@ -524,37 +751,6 @@
     footer a:hover {
       text-decoration: underline;
     }
-
-    /* Responsiveness */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
-      .nav-links { display: none; }
-      .arch-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
-    }
-  
-    .hero-dashboard-preview {
-      margin: 1.5rem auto;
-      max-width: 680px;
-      border-radius: 0.85rem;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.05);
-      background: #111115;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hero-dashboard-preview:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.35);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 255, 255, 0.1);
-    }
-    .dashboard-img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      display: block;
-    }
-    .card .hero-dashboard-preview { max-height: 200px; margin: 0.75rem 0 0; }
-    .card .dashboard-img { width: 100%; height: auto; max-height: 200px; object-fit: contain; }
 
     /* Lightbox Modal */
     .lightbox-modal {
@@ -616,8 +812,35 @@
       background: var(--accent-neon);
       color: #000;
     }
-    .hero-dashboard-preview img {
+    .hero-dashboard-preview {
+      margin: 1.5rem auto;
+      max-width: 680px;
+      border-radius: 0.85rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.05);
+      background: #111115;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       cursor: zoom-in;
+    }
+    .hero-dashboard-preview:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 35px rgba(255, 255, 255, 0.1);
+    }
+    .dashboard-img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.4rem; }
+      .nav-links { display: none; }
+      .arch-arrow { transform: rotate(90deg); margin: 0.5rem 0; }
+      .download-hub-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -638,9 +861,9 @@
         <li><a href="#overview" class="nav-link active" onclick="switchTab('overview', event)">Overview</a></li>
         <li><a href="#gallery" class="nav-link" onclick="switchTab('gallery', event)">Gallery</a></li>
         <li><a href="#features" class="nav-link" onclick="switchTab('features', event)">Features</a></li>
-        <li><a href="#installation" class="nav-link" onclick="switchTab('installation', event)">Installation</a></li>
+        <li><a href="#installation" class="nav-link" onclick="switchTab('installation', event)">Installation &amp; APK</a></li>
         <li><a href="#architecture" class="nav-link" onclick="switchTab('architecture', event)">Architecture</a></li>
-        <li><a href="#api" class="nav-link" onclick="switchTab('api', event)">API & Commands</a></li>
+        <li><a href="#api" class="nav-link" onclick="switchTab('api', event)">API &amp; Commands</a></li>
         <li><a href="#bug-bounty" class="nav-link" onclick="switchTab('bug-bounty', event)">Bug Bounty</a></li>
       </ul>
       <a href="https://github.com/xtros/Muziso" target="_blank" class="nav-btn">
@@ -657,55 +880,124 @@
     <section id="overview" class="doc-section active">
       <!-- Hero -->
       <div class="hero">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          Official Muziso Documentation Hub (v0.1.8)
+        <div class="hero-badges-wrap">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Official Muziso Ecosystem Hub
+          </div>
+          <div class="hero-badge">
+            <span class="hero-badge-dot blue"></span>
+            Desktop Edition (Tauri v2 + Rust)
+          </div>
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Mobile Edition (Android Kotlin)
+          </div>
         </div>
-        <h1>The Next-Gen <span>Modern</span> Desktop Music Player</h1>
+        
+        <h1>Next-Gen High-Fidelity Music<br/><span>For Desktop &amp; Mobile</span></h1>
         <p>
-          Muziso brings local audio collections, JioSaavn 320kbps direct CDN streaming, smart deduplication, and guaranteed official cover art into a high-performance desktop app powered by React 19, Rust, Tauri v2, GStreamer, and SQLite.
+          Muziso delivers sub-30ms 320 kbps streaming, smart version-preserving deduplication, 100% offline playback, and official high-resolution artwork across Windows, macOS, Linux, and Android devices.
         </p>
-        <div class="hero-cta">
-          <a href="https://github.com/xtros/Muziso/releases/latest" class="btn-lg btn-primary">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            Download Desktop App (v0.1.8)
-          </a>
-          <a href="#gallery" onclick="switchTab('gallery', event)" class="btn-lg btn-secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            View Screenshots Gallery
-          </a>
+
+        <!-- Dual Download Hub Cards -->
+        <div class="download-hub-grid">
+          <!-- Desktop Hub -->
+          <div class="hub-card desktop-hub">
+            <div class="hub-header">
+              <div class="hub-title-group">
+                <div class="hub-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div>
+                  <div class="hub-title">Muziso Desktop</div>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Windows &bull; macOS &bull; Linux</span>
+                </div>
+              </div>
+              <span class="hub-badge desktop-badge">Tauri v2 + Rust</span>
+            </div>
+            <p class="hub-desc">High-performance desktop player with 10-Band Equalizer DSP, Discord Rich Presence, Global Hotkeys, and local audio library scanning.</p>
+            <div class="hub-buttons">
+              <a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_x64-setup.exe" onclick="event.preventDefault(); downloadAsset('desktop');" class="btn-hub btn-hub-primary" id="btn-desktop-download">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <span id="desktop-download-text">Download Desktop (v0.1.8)</span>
+              </a>
+              <a href="#installation" onclick="switchTab('installation', event); switchInstallTab('windows', event);" class="btn-hub btn-hub-outline">
+                All Platforms
+              </a>
+            </div>
+          </div>
+
+          <!-- Mobile Hub -->
+          <div class="hub-card mobile-hub">
+            <div class="hub-header">
+              <div class="hub-title-group">
+                <div class="hub-icon" style="border-color: rgba(204, 255, 0, 0.4); color: var(--accent-green);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                </div>
+                <div>
+                  <div class="hub-title">Muziso Mobile</div>
+                  <span style="font-size: 0.8rem; color: var(--text-muted);">Android (.apk / Play Store)</span>
+                </div>
+              </div>
+              <span class="hub-badge mobile-badge">Native Kotlin</span>
+            </div>
+            <p class="hub-desc">Optimized native mobile experience with background MediaSession, lockscreen playback controls, Bluetooth auto-resume, and battery saver engine.</p>
+            <div class="hub-buttons">
+              <a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_v0.1.8.apk" onclick="event.preventDefault(); downloadAsset('android');" class="btn-hub btn-hub-green" id="btn-android-download">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download Android APK
+              </a>
+              <a href="#installation" onclick="switchTab('installation', event); switchInstallTab('android', event);" class="btn-hub btn-hub-outline">
+                APK &amp; Play Store Guide
+              </a>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Core Capabilities Grid -->
       <div class="grid-3">
         <div class="card">
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
           <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <h3>Native Rust Performance</h3>
-          <p>Built on Tauri v2 and native Rust FFI bindings, Muziso uses a fraction of the memory of traditional Electron music apps while maintaining instant response times.</p>
+          <h3>Sub-30ms 320 kbps CDN</h3>
+          <p>Instant audio resolution for tracks, albums, and playlists via direct JioSaavn 320 kbps bitstreams on both Desktop and Android Mobile.</p>
         </div>
+
         <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg></div>
-          <h3>Hybrid Audio Engine</h3>
-          <p>Play high-bitrate local audio files (<code>.flac</code>, <code>.wav</code>, <code>.mp3</code>, <code>.m4a</code>, <code>.opus</code>) seamlessly alongside online stream extraction using local sidecar processes.</p>
+          <span class="card-platform-pill pill-mobile">Android Mobile</span>
+          <div class="card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <h3>Background &amp; Lockscreen</h3>
+          <p>Native Android MediaSessionCompat foreground service with lockscreen music controls, headphone auto-pause, and low battery consumption.</p>
         </div>
+
         <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.72 1.7-1.65 0-.43-.17-.83-.46-1.13-.29-.3-.46-.71-.46-1.16 0-.92.75-1.66 1.67-1.66h2.46c2.8 0 5.09-2.29 5.09-5.09C22 6.47 17.52 2 12 2z"/></svg></div>
-          <h3>Modern Dark UI</h3>
-          <p>Signature cyber-minimal dark interface featuring custom Framer Motion page transitions, glowing visualizer overlays, and responsive volume controls.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <h3>Local Privacy & Offline</h3>
-          <p>Your library remains local. Muziso indexes tracks in a lightweight SQLite database (<code>rusqlite</code>) and stores downloads directly on your file system.</p>
-        </div>
-        <div class="card">
+          <span class="card-platform-pill pill-desktop">Desktop</span>
           <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <h3>Sub-30ms CDN Streams</h3>
-          <p>Instant 320 kbps direct audio stream resolution via JioSaavn & Spotify Web APIs for search results and playlists.</p>
+          <h3>Native Rust FFI Core</h3>
+          <p>Powered by Tauri v2 and Rust, Muziso Desktop operates with a fraction of the RAM of Electron players while preserving instant responsiveness.</p>
         </div>
+
         <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.72 1.7-1.65 0-.43-.17-.83-.46-1.13-.29-.3-.46-.71-.46-1.16 0-.92.75-1.66 1.67-1.66h2.46c2.8 0 5.09-2.29 5.09-5.09C22 6.47 17.52 2 12 2z"/></svg></div>
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0z"/></svg></div>
+          <h3>Smart Deduplication</h3>
+          <p>Intelligently collapses duplicate compilation re-releases while strictly preserving language dubs and remix variants (Tamil, Telugu, Hindi, Lofi, Acoustic).</p>
+        </div>
+
+        <div class="card">
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
           <h3>Spotify Artwork Engine</h3>
-          <p>Automatic official 640x640 high-resolution album cover resolver for every track across the app.</p>
+          <p>Official 640x640 high-resolution album cover resolver automatic fetching across search results, discographies, and local libraries.</p>
+        </div>
+
+        <div class="card">
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>100% Local Privacy</h3>
+          <p>Zero telemetry, zero tracking. All playlists, history, and offline songs stay safe on your device inside an encrypted local SQLite database.</p>
         </div>
       </div>
 
@@ -715,7 +1007,7 @@
           <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg></div>
           <h3>Immersive Player</h3>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Ambient artwork blur & 3D vinyl record disc.</p>
-          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;" onclick="openLightbox('assets/player.png', 'Muziso Immersive Audio Player')">
             <img src="assets/player.png" alt="Muziso Immersive Audio Player" class="dashboard-img" />
           </div>
         </div>
@@ -723,7 +1015,7 @@
           <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
           <h3>Your Library</h3>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Local music folders, Liked Songs & playlists.</p>
-          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;" onclick="openLightbox('assets/library.png', 'Muziso Your Library')">
             <img src="assets/library.png" alt="Muziso Your Library" class="dashboard-img" />
           </div>
         </div>
@@ -731,7 +1023,7 @@
           <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
           <h3>Graphic Equalizer</h3>
           <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">10-band DSP curve & genre studio presets.</p>
-          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
+          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;" onclick="openLightbox('assets/equalizer.png', 'Muziso Graphic Equalizer')">
             <img src="assets/equalizer.png" alt="Muziso Graphic Equalizer" class="dashboard-img" />
           </div>
         </div>
@@ -745,7 +1037,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           App Showcase &amp; UI Screenshots Gallery
         </h2>
-        <p style="color: var(--text-muted); font-size: 1rem;">Click any screenshot below to view in full resolution.</p>
+        <p style="color: var(--text-muted); font-size: 1rem;">Click any screenshot below to view high-resolution previews of the Muziso user interface.</p>
       </div>
 
       <div class="grid-2">
@@ -798,196 +1090,409 @@
 
     <!-- TAB 3: FEATURES -->
     <section id="features" class="doc-section">
-      <div class="card" style="margin-bottom: 2rem;">
+      <div class="card" style="margin-bottom: 1.5rem;">
         <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Features &amp; Core Capabilities
+          Features &amp; Platform Capabilities
         </h2>
-        <p style="color: var(--text-muted); font-size: 1rem;">Explore Muziso's native Rust streaming engine, smart queueing, global hotkeys, offline downloads, and Discord rich presence integration.</p>
+        <p style="color: var(--text-muted); font-size: 1rem;">Filter features by platform to explore specialized Desktop and Mobile enhancements.</p>
       </div>
 
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-          <h3>IP-Bound Stream Resolution</h3>
-          <p>Integrated platform-decoupled <code>yt-dlp</code> sidecar engine to resolve online high-resolution audio streams directly with zero proxy latency.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></div>
-          <h3>Smart Queue & Shuffle</h3>
-          <p>Advanced queue management maintaining deterministic historical back-navigation even when shuffle mode is toggled on and off.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-          <h3>In-App Announcement Feed</h3>
-          <p>Real-time developer update feed with read/unread tracking and remote synchronization directly inside the client interface.</p>
-        </div>
-        <div class="card">
+      <!-- Platform Filter Pills -->
+      <div class="filter-pill-container">
+        <button class="filter-pill active" onclick="filterFeatures('all', this)">All Features</button>
+        <button class="filter-pill" onclick="filterFeatures('desktop', this)">💻 Desktop Only</button>
+        <button class="filter-pill" onclick="filterFeatures('mobile', this)">📱 Mobile (Android)</button>
+        <button class="filter-pill" onclick="filterFeatures('universal', this)">⚡ Cross-Platform</button>
+      </div>
+
+      <div class="grid-3" id="features-grid">
+        <!-- Desktop Features -->
+        <div class="card feature-card" data-platform="desktop">
+          <span class="card-platform-pill pill-desktop">Desktop</span>
           <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4m10-2h.01m-3.01 0h.01"/></svg></div>
           <h3>Discord Rich Presence</h3>
-          <p>Displays currently playing song, artist, duration, and album cover art on your Discord profile automatically.</p>
+          <p>Displays currently playing song, artist name, track duration, and official album art directly on your Discord profile card in real time.</p>
         </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg></div>
-          <h3>Global Hotkeys</h3>
-          <p>Control playback (Play/Pause, Next, Previous) system-wide even when Muziso is minimized or running in the background.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-          <h3>Offline Caching & Downloads</h3>
-          <p>Save streaming audio tracks to your disk for immediate offline playback with custom metadata tag indexing.</p>
-        </div>
-      </div>
 
-      <h3 style="margin-top: 3rem; margin-bottom: 1.25rem; font-family: var(--font-heading); font-size: 1.4rem; color: #fff;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Feature Visual Previews</h3>
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <h3>Account Profile</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Avatar customization & listening stats.</p>
-          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
-            <img src="assets/profile.png" alt="Muziso Account Profile" class="dashboard-img" />
-          </div>
+        <div class="card feature-card" data-platform="desktop">
+          <span class="card-platform-pill pill-desktop">Desktop</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg></div>
+          <h3>System-Wide Global Hotkeys</h3>
+          <p>Control playback (Play/Pause, Next Track, Previous, Mute) system-wide on Windows, macOS, and Linux even when Muziso is minimized.</p>
         </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
-          <h3>Library Management</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Local song scanner & playlist uploader.</p>
-          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
-            <img src="assets/library.png" alt="Muziso Library View" class="dashboard-img" />
-          </div>
+
+        <div class="card feature-card" data-platform="desktop">
+          <span class="card-platform-pill pill-desktop">Desktop</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h3>Tauri v2 IPC &amp; GStreamer</h3>
+          <p>Native Rust FFI bridge binding high-performance GStreamer audio pipeline for gapless multi-format playback and sub-1% idle CPU load.</p>
         </div>
-        <div class="card">
-          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></div>
-          <h3>10-Band Equalizer</h3>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">Studio DSP curve & frequency faders.</p>
-          <div class="hero-dashboard-preview" style="margin: 0.5rem 0 0;">
-            <img src="assets/equalizer.png" alt="Muziso Equalizer" class="dashboard-img" />
-          </div>
+
+        <!-- Mobile Features -->
+        <div class="card feature-card" data-platform="mobile">
+          <span class="card-platform-pill pill-mobile">Mobile</span>
+          <div class="card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+          <h3>MediaSession &amp; Lockscreen</h3>
+          <p>Foreground Android audio service integration with high-resolution lockscreen artwork, scrubbing timeline, and persistent control center buttons.</p>
+        </div>
+
+        <div class="card feature-card" data-platform="mobile">
+          <span class="card-platform-pill pill-mobile">Mobile</span>
+          <div class="card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>
+          <h3>Bluetooth &amp; Auto-Pause</h3>
+          <p>Smart audio focus handling: automatically pauses when headphones unplug or calls arrive, and resumes upon Bluetooth device reconnection.</p>
+        </div>
+
+        <div class="card feature-card" data-platform="mobile">
+          <span class="card-platform-pill pill-mobile">Mobile</span>
+          <div class="card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <h3>Low-Power Kotlin Engine</h3>
+          <p>Engineered in Native Kotlin with Jetpack Media3 ExoPlayer, Coroutines, and hardware audio offloading for all-day battery efficiency.</p>
+        </div>
+
+        <!-- Universal Features -->
+        <div class="card feature-card" data-platform="universal">
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h3>Sub-30ms Direct CDN Stream</h3>
+          <p>Instant audio resolution (<code>song.getDetails</code>) for JioSaavn tracks, Search results, and Playlists with zero proxy delay.</p>
+        </div>
+
+        <div class="card feature-card" data-platform="universal">
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg></div>
+          <h3>Smart Queue &amp; Deduplication</h3>
+          <p>Deterministic shuffle history preservation and intelligent suppression of duplicate compilation albums while keeping language dubs.</p>
+        </div>
+
+        <div class="card feature-card" data-platform="universal">
+          <span class="card-platform-pill pill-universal">Cross-Platform</span>
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+          <h3>Offline Caching &amp; Downloads</h3>
+          <p>Save streaming audio tracks to your device storage for offline playback with high-res artwork and complete metadata tag indexing.</p>
         </div>
       </div>
     </section>
 
-    <!-- TAB 3: INSTALLATION -->
+    <!-- TAB 4: INSTALLATION -->
     <section id="installation" class="doc-section">
       <div class="card" style="margin-bottom: 2rem;">
-        <h3>End-User Install Packages</h3>
-        <p style="margin-bottom: 1rem;">Download pre-compiled standalone installers from the official GitHub releases page:</p>
-        <table>
-          <thead>
-            <tr>
-              <th>OS Platform</th>
-              <th>Format</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Windows</strong></td>
-              <td><code>.exe</code> / <code>.msi</code> / <code>.zip</code></td>
-              <td><a href="https://github.com/xtros/Muziso/releases/latest" style="color: var(--accent-neon);">Download Windows Package</a></td>
-            </tr>
-            <tr>
-              <td><strong>macOS</strong></td>
-              <td><code>.dmg</code> / <code>.app</code></td>
-              <td><a href="https://github.com/xtros/Muziso/releases/latest" style="color: var(--accent-neon);">Download macOS Package</a></td>
-            </tr>
-            <tr>
-              <td><strong>Linux</strong></td>
-              <td><code>.deb</code> / <code>.AppImage</code></td>
-              <td><a href="https://github.com/xtros/Muziso/releases/latest" style="color: var(--accent-neon);">Download Linux Package</a></td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Installation &amp; Setup Guide
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1rem;">Select your operating system or mobile platform below for download packages and installation instructions.</p>
       </div>
 
-      <div class="card">
-        <h3>Developer Build Prerequisites</h3>
-        <p>To compile Muziso from source code, ensure you have Node.js 18+, Rust toolchain, and GStreamer dependencies installed:</p>
+      <!-- Installation Platform Sub-Tabs -->
+      <div class="subtabs-nav">
+        <button class="subtab-btn active" onclick="switchInstallTab('windows', event)">🪟 Windows</button>
+        <button class="subtab-btn" onclick="switchInstallTab('android', event)">🤖 Android (APK &amp; Play)</button>
+        <button class="subtab-btn" onclick="switchInstallTab('macos', event)">🍎 macOS</button>
+        <button class="subtab-btn" onclick="switchInstallTab('linux', event)">🐧 Linux</button>
+        <button class="subtab-btn" onclick="switchInstallTab('developer', event)">🛠️ Developer Source</button>
+      </div>
 
-        <div class="code-block">
-          <div class="code-header">
-            <span>Windows PowerShell (Dependencies)</span>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <!-- Windows Content -->
+      <div id="install-windows" class="subtab-content active">
+        <div class="card">
+          <h3>Windows Desktop Installation (v0.1.8)</h3>
+          <p style="margin-bottom: 1.25rem;">Supported on Windows 10 and Windows 11 (64-bit x86_64 architecture).</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Package Format</th>
+                <th>Description</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>.exe</code> Installer</strong></td>
+                <td>Standard NSIS setup installer with auto-updater support</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_x64-setup.exe" onclick="event.preventDefault(); downloadAsset('windows-exe');" style="color: var(--accent-green); font-weight: 600;">Download Setup.exe &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><strong><code>.msi</code> Package</strong></td>
+                <td>Windows Installer package for enterprise &amp; automated deployments</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_x64_en-US.msi" onclick="event.preventDefault(); downloadAsset('windows-msi');" style="color: var(--accent-green); font-weight: 600;">Download .msi &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><strong><code>.zip</code> Portable</strong></td>
+                <td>Standalone portable folder, no installation required</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_x64.zip" onclick="event.preventDefault(); downloadAsset('windows-zip');" style="color: var(--accent-green); font-weight: 600;">Download .zip &rarr;</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="background: rgba(255, 255, 255, 0.04); border-left: 3px solid #ffffff; padding: 1rem; border-radius: 6px; margin-top: 1.5rem;">
+            <p style="font-size: 0.88rem; color: #fff; font-weight: 600; margin-bottom: 0.25rem;">Windows Defender SmartScreen Notice:</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Because Muziso is an open-source binary, Windows SmartScreen may show an "Unknown Publisher" prompt. Click <strong>More info</strong> &rarr; <strong>Run anyway</strong> to start.</p>
           </div>
-          <pre><code>choco install gstreamer-runtime gstreamer-devel pkgconfiglite -y
-$env:PKG_CONFIG_PATH = "C:\gstreamer\1.0\msvc_x86_64\lib\pkgconfig"
-$env:GSTREAMER_1_0_ROOT_X86_64 = "C:\gstreamer\1.0\msvc_x86_64\"</code></pre>
         </div>
+      </div>
 
-        <div class="code-block">
-          <div class="code-header">
-            <span>macOS Homebrew</span>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <!-- Android Mobile Content -->
+      <div id="install-android" class="subtab-content">
+        <div class="card">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+            <div>
+              <h3 style="color: var(--accent-green);">🤖 Muziso Android Mobile (v0.1.8)</h3>
+              <p style="color: var(--text-muted);">Native Kotlin music player for Android 8.0 (Oreo) and above.</p>
+            </div>
+            <span class="card-platform-pill pill-mobile" style="position: static;">Native APK</span>
           </div>
-          <pre><code>brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly pkg-config</code></pre>
+
+          <div class="grid-2" style="margin-bottom: 1.5rem;">
+            <div style="background: rgba(204, 255, 0, 0.06); border: 1px solid rgba(204, 255, 0, 0.25); border-radius: 12px; padding: 1.25rem;">
+              <h4 style="color: #fff; margin-bottom: 0.5rem; font-family: var(--font-heading);">📦 Direct APK Sideload</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Download standalone unsigned/signed APK binary directly to your Android device.</p>
+              <a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_v0.1.8.apk" onclick="event.preventDefault(); downloadAsset('android');" class="btn-hub btn-hub-green">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download Muziso.apk
+              </a>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem;">
+              <h4 style="color: #fff; margin-bottom: 0.5rem; font-family: var(--font-heading);">🛍️ Google Play Store</h4>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Get automatic background updates, safety verification, and cloud sync.</p>
+              <a href="https://github.com/xtros/Muziso/releases" class="btn-hub btn-hub-outline">
+                View Play Store Listing
+              </a>
+            </div>
+          </div>
+
+          <h4 style="color: #fff; margin-bottom: 0.75rem; font-family: var(--font-heading);">📱 How to Install via APK Sideload:</h4>
+          <ol style="margin-left: 1.5rem; color: var(--text-muted); line-height: 1.8; font-size: 0.92rem;">
+            <li>Download <code>Muziso_v0.1.8.apk</code> using your Android mobile browser.</li>
+            <li>Tap the downloaded file. When prompted, tap <strong>Settings</strong> and enable <strong>"Allow from this source"</strong> (Install Unknown Apps).</li>
+            <li>Tap <strong>Install</strong>. Once complete, launch Muziso and start streaming 320 kbps high-res music!</li>
+          </ol>
         </div>
+      </div>
 
-        <div class="code-block">
-          <div class="code-header">
-            <span>Ubuntu / Debian APT</span>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <!-- macOS Content -->
+      <div id="install-macos" class="subtab-content">
+        <div class="card">
+          <h3>macOS Desktop Installation</h3>
+          <p style="margin-bottom: 1.25rem;">Universal build supporting Apple Silicon (M1/M2/M3/M4) and Intel x86_64 processors.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Package Format</th>
+                <th>Compatibility</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>.dmg</code> Disk Image</strong></td>
+                <td>macOS 11.0 Big Sur or later (Universal)</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_x64.dmg" onclick="event.preventDefault(); downloadAsset('macos-dmg');" style="color: var(--accent-green); font-weight: 600;">Download .dmg &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><strong><code>.app.tar.gz</code></strong></td>
+                <td>Raw macOS Application bundle</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_universal.app.tar.gz" onclick="event.preventDefault(); downloadAsset('macos-bundle');" style="color: var(--accent-green); font-weight: 600;">Download Bundle &rarr;</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="background: rgba(255, 255, 255, 0.04); border-left: 3px solid #ffffff; padding: 1rem; border-radius: 6px; margin-top: 1.5rem;">
+            <p style="font-size: 0.88rem; color: #fff; font-weight: 600; margin-bottom: 0.25rem;">Gatekeeper Notice:</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">If macOS shows a "cannot be opened because developer cannot be verified" warning, right-click <code>Muziso.app</code> &rarr; select <strong>Open</strong> &rarr; click <strong>Open</strong> in dialog.</p>
           </div>
-          <pre><code>sudo apt update && sudo apt install -y build-essential pkg-config libasound2-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev gstreamer1.0-plugins-ugly libwebkit2gtk-4.1-dev</code></pre>
         </div>
+      </div>
 
-        <div class="code-block">
-          <div class="code-header">
-            <span>Build & Run Development Server</span>
-            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+      <!-- Linux Content -->
+      <div id="install-linux" class="subtab-content">
+        <div class="card">
+          <h3>Linux Desktop Installation</h3>
+          <p style="margin-bottom: 1.25rem;">Universal AppImage and Debian/Ubuntu packages:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Package Format</th>
+                <th>Distribution</th>
+                <th>Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong><code>.AppImage</code></strong></td>
+                <td>Universal Linux (Ubuntu, Fedora, Arch, Debian)</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/Muziso_0.1.8_amd64.AppImage" onclick="event.preventDefault(); downloadAsset('linux-appimage');" style="color: var(--accent-green); font-weight: 600;">Download AppImage &rarr;</a></td>
+              </tr>
+              <tr>
+                <td><strong><code>.deb</code> Package</strong></td>
+                <td>Ubuntu / Debian / Linux Mint</td>
+                <td><a href="https://github.com/xtros/Muziso/releases/latest/download/muziso_0.1.8_amd64.deb" onclick="event.preventDefault(); downloadAsset('linux-deb');" style="color: var(--accent-green); font-weight: 600;">Download .deb &rarr;</a></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span>Linux Terminal (Run AppImage)</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code>chmod +x Muziso_0.1.8_amd64.AppImage
+./Muziso_0.1.8_amd64.AppImage</code></pre>
           </div>
-          <pre><code>git clone https://github.com/xtros/Muziso.git
+        </div>
+      </div>
+
+      <!-- Developer Source Content -->
+      <div id="install-developer" class="subtab-content">
+        <div class="card">
+          <h3>Building From Source Code</h3>
+          <p style="margin-bottom: 1.5rem;">Instructions for compiling both Desktop (Tauri v2 + Rust) and Mobile (Android Kotlin):</p>
+
+          <h4 style="color: #fff; margin-bottom: 0.5rem; font-family: var(--font-heading);">1. Desktop Build (Tauri v2 + React 19 + Rust)</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span>Desktop Setup (Bash / PowerShell)</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code># Clone repo and install dependencies
+git clone https://github.com/xtros/Muziso.git
 cd Muziso
 npm install
-npm run tauri dev</code></pre>
+
+# Run Desktop app in development mode
+npm run tauri dev
+
+# Compile standalone production installers
+npx tauri build</code></pre>
+          </div>
+
+          <h4 style="color: #fff; margin-top: 2rem; margin-bottom: 0.5rem; font-family: var(--font-heading);">2. Android Mobile Build (Native Kotlin + Gradle)</h4>
+          <div class="code-block">
+            <div class="code-header">
+              <span>Android Build (JDK 17 + Gradle)</span>
+              <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><code># Prerequisites: JDK 17+ and Android SDK 34+
+cd android
+./gradlew assembleDebug
+
+# Generate release APK
+./gradlew assembleRelease</code></pre>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 4: ARCHITECTURE -->
+    <!-- TAB 5: ARCHITECTURE -->
     <section id="architecture" class="doc-section">
       <div class="card" style="margin-bottom: 2rem;">
-        <h3>System Architecture Overview</h3>
-        <p>Muziso operates on a decoupled client-backend design. The web view (React 19) interacts with the Rust Tauri backend using IPC commands, while audio streaming is managed by native GStreamer FFI and rodio bindings.</p>
-        
-        <div class="arch-diagram">
-          <div class="arch-nodes">
-            <div class="arch-node active-node">
-              <h4>React 19 Frontend</h4>
-              <span>Modern UI & Queue</span>
+        <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          System Architecture Blueprints
+        </h2>
+        <p style="color: var(--text-muted); font-size: 1rem;">Muziso utilizes specialized, native pipelines optimized for each platform's hardware and runtime constraints.</p>
+      </div>
+
+      <!-- Architecture Platform Switcher -->
+      <div class="subtabs-nav">
+        <button class="subtab-btn active" onclick="switchArchTab('arch-desktop', event)">💻 Desktop Architecture (Tauri + Rust)</button>
+        <button class="subtab-btn" onclick="switchArchTab('arch-mobile', event)">📱 Mobile Architecture (Android Kotlin)</button>
+      </div>
+
+      <!-- Desktop Arch -->
+      <div id="arch-desktop" class="subtab-content active">
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <h3>Desktop Audio Engine Pipeline</h3>
+          <p>Decoupled React 19 web layer interacting with native Rust backend via zero-copy Tauri IPC, piping audio buffers directly to GStreamer and Rodio DSP.</p>
+          
+          <div class="arch-diagram">
+            <div class="arch-nodes">
+              <div class="arch-node active-node">
+                <h4>React 19 Frontend</h4>
+                <span>Modern UI &amp; Queue</span>
+              </div>
+              <div class="arch-arrow">&rarr;</div>
+              <div class="arch-node">
+                <h4>Tauri v2 IPC</h4>
+                <span>Rust Commands &amp; State</span>
+              </div>
+              <div class="arch-arrow">&rarr;</div>
+              <div class="arch-node active-node">
+                <h4>GStreamer / Rodio</h4>
+                <span>Native Audio FFI Pipeline</span>
+              </div>
+              <div class="arch-arrow">&rarr;</div>
+              <div class="arch-node">
+                <h4>SQLite (<code>rusqlite</code>)</h4>
+                <span>Local Library Database</span>
+              </div>
             </div>
-            <div class="arch-arrow">&rarr;</div>
-            <div class="arch-node">
-              <h4>Tauri v2 IPC</h4>
-              <span>Rust Commands & State</span>
-            </div>
-            <div class="arch-arrow">&rarr;</div>
-            <div class="arch-node active-node">
-              <h4>GStreamer / Rodio</h4>
-              <span>Native Audio FFI Pipeline</span>
-            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Desktop SQLite Database</h3>
+            <p>Maintains encrypted local <code>muziso.db</code> storing song metadata indices, play counts, liked songs, and playlist relations with instant sub-millisecond lookup.</p>
+          </div>
+          <div class="card">
+            <h3>Sidecar Isolation</h3>
+            <p>Direct online stream resolution runs in sandboxed <code>yt-dlp</code> background helper sidecars for seamless format extraction without browser overhead.</p>
           </div>
         </div>
       </div>
 
-      <div class="grid-2">
-        <div class="card">
-          <h3>SQLite Persistence (<code>rusqlite</code>)</h3>
-          <p>Muziso maintains a local SQLite database (<code>muziso.db</code>) storing user library metadata, play history, playlist items, and offline track indices for instantaneous startup.</p>
+      <!-- Mobile Arch -->
+      <div id="arch-mobile" class="subtab-content">
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <h3 style="color: var(--accent-green);">Android Mobile Native Architecture</h3>
+          <p>Native Kotlin architecture built with Jetpack Compose / Android Views, Kotlin Coroutines, Jetpack Media3 ExoPlayer, and Room Database.</p>
+          
+          <div class="arch-diagram">
+            <div class="arch-nodes">
+              <div class="arch-node active-mobile">
+                <h4>Kotlin UI Layer</h4>
+                <span>Compose &amp; ViewModel</span>
+              </div>
+              <div class="arch-arrow" style="color: var(--accent-green);">&rarr;</div>
+              <div class="arch-node">
+                <h4>MediaSession Service</h4>
+                <span>Foreground Audio Service</span>
+              </div>
+              <div class="arch-arrow" style="color: var(--accent-green);">&rarr;</div>
+              <div class="arch-node active-mobile">
+                <h4>Jetpack Media3</h4>
+                <span>ExoPlayer 320kbps Decoder</span>
+              </div>
+              <div class="arch-arrow" style="color: var(--accent-green);">&rarr;</div>
+              <div class="arch-node">
+                <h4>Room SQLite</h4>
+                <span>Android Encrypted DAO</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="card">
-          <h3>Sidecar Process Isolation</h3>
-          <p>Online audio resolution is delegated to platform-specific <code>yt-dlp</code> binaries bundle in <code>src-tauri/bin/</code>, executing under strict sandbox constraints.</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Background MediaSessionCompat</h3>
+            <p>Ensures gapless playback when the screen is turned off or apps are switched, coordinating with Android OS audio focus rules and notification trays.</p>
+          </div>
+          <div class="card">
+            <h3>OkHttp &amp; Retrofit Stream Resolver</h3>
+            <p>Direct sub-30ms CDN query pipeline caching response payloads to save mobile cellular bandwidth while guaranteeing highest bitrate streams.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- TAB 5: API -->
+    <!-- TAB 6: API -->
     <section id="api" class="doc-section">
       <div class="card">
-        <h3>Key Tauri IPC Commands</h3>
-        <p>The following Rust IPC functions are exposed to the React frontend via <code>@tauri-apps/api/core</code>:</p>
+        <h3>Core Commands &amp; Architecture Interfaces</h3>
+        <p>Key interfaces powering Desktop IPC and Mobile Native Services:</p>
         
+        <h4 style="color: #fff; margin: 1.5rem 0 0.75rem; font-family: var(--font-heading);">💻 Desktop Rust IPC Commands:</h4>
         <table>
           <thead>
             <tr>
@@ -1000,62 +1505,58 @@ npm run tauri dev</code></pre>
             <tr>
               <td><code>init_gstreamer</code></td>
               <td>None</td>
-              <td>Initializes GStreamer pipeline and injects runtime DLL environment paths on Windows.</td>
+              <td>Initializes GStreamer audio pipeline and dynamic DLL runtime path injection.</td>
             </tr>
             <tr>
               <td><code>resolve_stream_url</code></td>
               <td><code>url: String</code></td>
-              <td>Invokes <code>yt-dlp</code> sidecar to extract high-bitrate direct audio URLs.</td>
+              <td>Invokes sidecar engine to resolve high-bitrate direct audio URLs.</td>
             </tr>
             <tr>
               <td><code>scan_local_directory</code></td>
               <td><code>path: String</code></td>
-              <td>Recursively parses audio metadata tags using <code>lofty</code> and indexes tracks into SQLite.</td>
+              <td>Recursively parses audio metadata tags using <code>lofty</code> and indexes into SQLite.</td>
             </tr>
             <tr>
               <td><code>update_discord_rpc</code></td>
               <td><code>title: String, artist: String</code></td>
-              <td>Updates active Discord user status activity card with track details.</td>
+              <td>Broadcasts active song title and duration to the local Discord client.</td>
             </tr>
           </tbody>
         </table>
-      </div>
-    </section>
 
-    <!-- TAB 5: PRIVACY POLICY -->
-    <section id="privacy" class="doc-section">
-      <div class="card">
-        <div class="card-icon">🔒</div>
-        <h3>Privacy Policy</h3>
-        <p style="margin-bottom: 1rem; color: var(--accent-neon);">Effective Date: February 19, 2026 (v0.1.8)</p>
-        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Muziso is designed around a <strong>privacy-first, offline-capable architecture</strong>. The Application does not collect, store, or sell your personal information, browsing history, listening habits, or library metadata.</p>
-        
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">1. Local Storage & Database</h4>
-        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">All user data—including liked songs, playlists, play counts, history, and app preferences—is stored 100% locally on your device inside an encrypted/sandboxed SQLite database (<code>muziso.db</code>). This data never leaves your device.</p>
-        
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">2. External Streams & Metadata</h4>
-        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">When streaming online audio or viewing artist discographies, Muziso requests direct public metadata (JioSaavn, Spotify API, YouTube via <code>yt-dlp</code>). No user identification tokens, email addresses, or personal accounts are transmitted.</p>
-
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">3. Zero Telemetry & Tracking</h4>
-        <p style="color: var(--text-muted);">Muziso contains zero telemetry, zero analytics scripts, and zero tracking pixels. For full details, see <a href="PRIVACY.md" style="color: var(--accent-neon);">PRIVACY.md</a>.</p>
-      </div>
-    </section>
-
-    <!-- TAB 6: TERMS & CONDITIONS -->
-    <section id="terms" class="doc-section">
-      <div class="card">
-        <div class="card-icon">⚖️</div>
-        <h3>Terms & Conditions</h3>
-        <p style="margin-bottom: 1rem; color: var(--accent-neon);">Effective Date: February 19, 2026 (v0.1.8)</p>
-        
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">1. Open-Source Licensing</h4>
-        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" style="color: var(--accent-neon);">MIT License</a>. You are free to run, modify, compile, and distribute copies for personal or educational purposes.</p>
-
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">2. Fair Use & Third-Party Content</h4>
-        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Muziso acts as a user interface client for local media files and public web services. All trademarks, song titles, artist names, and cover art remain the intellectual property of their respective rights holders. Muziso does not host, upload, or monetize copyrighted media files on external servers.</p>
-
-        <h4 style="color: #fff; margin-bottom: 0.5rem;">3. Warranty Disclaimer</h4>
-        <p style="color: var(--text-muted);">Muziso is provided "AS IS", without warranty of any kind. See <a href="TERMS.md" style="color: var(--accent-neon);">TERMS.md</a> for complete legal disclaimers.</p>
+        <h4 style="color: #fff; margin: 2rem 0 0.75rem; font-family: var(--font-heading);">📱 Mobile Android Architecture Components:</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Layer</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>MuzisoAudioService</code></td>
+              <td>Foreground Service</td>
+              <td>Manages Jetpack Media3 ExoPlayer lifecycle, notification bar controls, and lockscreen media session.</td>
+            </tr>
+            <tr>
+              <td><code>JioSaavnResolver</code></td>
+              <td>Repository / Network</td>
+              <td>Direct 320 kbps sub-30ms audio URL resolution using OkHttp.</td>
+            </tr>
+            <tr>
+              <td><code>MuzisoRoomDatabase</code></td>
+              <td>Persistence (Room)</td>
+              <td>Local Android SQLite database storing offline audio files, history, and playlists.</td>
+            </tr>
+            <tr>
+              <td><code>HeadsetReceiver</code></td>
+              <td>BroadcastReceiver</td>
+              <td>Handles noisy audio intent (auto-pause on headphone disconnect / resume on Bluetooth).</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
@@ -1064,12 +1565,12 @@ npm run tauri dev</code></pre>
       <div class="card">
         <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Bug Hunter Reward Program</h3>
-        <p style="margin-bottom: 1.5rem;">Help improve Muziso! We reward community members who discover functional audio playback bugs, UI glitches, or security vulnerabilities.</p>
+        <p style="margin-bottom: 1.5rem;">Help improve Muziso! We reward community members who discover functional audio playback bugs, UI glitches, or security vulnerabilities on Desktop or Android Mobile.</p>
         
         <h3>How to Report:</h3>
         <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.8;">
-          <li>Check open issues on <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Issues</a> to ensure it hasn't been submitted.</li>
-          <li>Submit a new issue containing OS specifications, Muziso version, reproduction steps, and console/system logs.</li>
+          <li>Check open issues on <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-green);">GitHub Issues</a> to ensure it hasn't been submitted.</li>
+          <li>Submit a new issue specifying platform (<strong>Desktop</strong> or <strong>Android Mobile</strong>), OS/Android version, reproduction steps, and logs.</li>
           <li>Confirmed bug reports earn contributor recognition and rewards!</li>
         </ol>
       </div>
@@ -1082,54 +1583,25 @@ npm run tauri dev</code></pre>
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           Muziso Privacy Policy
         </h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; App Version: v0.1.8</p>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; Covers Desktop &amp; Mobile Editions</p>
       </div>
 
       <div class="card" style="margin-bottom: 1.5rem;">
-        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">🛡️ Overview &amp; Privacy Commitment</h3>
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">🛡️ Privacy Commitment</h3>
         <p style="color: var(--text-muted); line-height: 1.7;">
-          <strong>Muziso</strong> ("the Application") is an open-source desktop music player created by <strong>Webs By JTS</strong>. We respect your privacy and are committed to protecting your personal data. Muziso is designed around a <strong>privacy-first, offline-capable architecture</strong>. The Application does <strong>not</strong> collect, store, or sell your personal information, browsing history, listening habits, or library metadata.
+          <strong>Muziso</strong> ("the Application") is an open-source music player created by <strong>Webs By JTS</strong> for Desktop and Android Mobile. We respect your privacy and operate under a <strong>100% local, offline-first privacy architecture</strong>. Muziso does <strong>not</strong> collect, track, store, or transmit your personal data, audio files, search queries, or listening habits.
         </p>
       </div>
 
       <div class="card" style="margin-bottom: 1.5rem;">
-        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 1rem;">📊 Data Collection &amp; Usage</h3>
+        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 1rem;">📊 Data Storage &amp; Network Requests</h3>
         <div style="color: var(--text-muted); line-height: 1.8;">
-          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">1. Local Storage &amp; Database (<code>muziso.db</code>)</h4>
-          <p style="margin-bottom: 1.25rem;">All user data—including liked songs, playlists, play counts, history, and app preferences—is stored <strong>100% locally</strong> on your device inside an encrypted/sandboxed SQLite database (<code>muziso.db</code>). This data never leaves your computer and is not transmitted to external analytics servers.</p>
+          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">1. 100% Local Database Storage</h4>
+          <p style="margin-bottom: 1.25rem;">All playlist entries, liked tracks, offline download indexation, and settings are saved strictly on your local device (Desktop SQLite / Android Room Database). None of this data is uploaded to cloud servers.</p>
           
-          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">2. External Audio Stream &amp; Metadata Resolution</h4>
-          <p style="margin-bottom: 1.25rem;">When you stream online audio or view artist discographics, Muziso sends direct requests to public music providers (e.g., JioSaavn, Spotify Web API, YouTube via <code>yt-dlp</code> sidecar). Requests contain only necessary query parameters (track/artist title, song ID, regional language headers). No user identification tokens, email addresses, or personal accounts are transmitted during audio stream resolution.</p>
-
-          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">3. Optional Features</h4>
-          <ul style="margin-left: 1.5rem;">
-            <li><strong>Discord Rich Presence (<code>discord-rich-presence</code>)</strong>: If enabled in App Settings, Muziso broadcasts your current playing track title, artist name, and duration to the local Discord client running on your machine. This feature is opt-in and can be toggled off at any time.</li>
-            <li><strong>Software Update Checker (<code>tauri-plugin-updater</code>)</strong>: Muziso checks GitHub Releases for software updates using Tauri's updater plugin. This check fetches public release metadata to determine if a newer version is available.</li>
-          </ul>
+          <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 0.25rem;">2. Streaming &amp; Metadata Resolution</h4>
+          <p style="margin-bottom: 1.25rem;">When streaming online tracks, Muziso queries official CDN endpoints (JioSaavn / Spotify Web API). Requests contain strictly anonymous song/artist IDs with zero user identifying cookies or tracking tokens.</p>
         </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">🚫 Zero Analytics &amp; Tracking</h3>
-          <p style="color: var(--text-muted); line-height: 1.7;">
-            Muziso contains <strong>zero telemetry</strong>, <strong>zero analytics scripts</strong>, and <strong>zero tracking pixels</strong>. We do not use Google Analytics, Mixpanel, Sentry, or any telemetry services.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">🔐 Children's Privacy</h3>
-          <p style="color: var(--text-muted); line-height: 1.7;">
-            Muziso is suitable for users of all ages. Because we do not collect any personal data, we do not knowingly request or store data from children under 13.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">📬 Contact Information</h3>
-        <p style="color: var(--text-muted); line-height: 1.7;">
-          For questions regarding this Privacy Policy or app security, please open an issue on the <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Issues</a> page or contact <strong>Webs By JTS</strong>.
-        </p>
       </div>
     </section>
 
@@ -1138,50 +1610,17 @@ npm run tauri dev</code></pre>
       <div class="card" style="margin-bottom: 2rem;">
         <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; color: #fff;">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          Muziso Terms &amp; Conditions of Service
+          Terms &amp; Conditions
         </h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; App Version: v0.1.8</p>
-      </div>
-
-      <div class="card" style="margin-bottom: 1.5rem;">
-        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">📜 Acceptance of Terms</h3>
-        <p style="color: var(--text-muted); line-height: 1.7;">
-          By downloading, installing, or using <strong>Muziso</strong> ("the Application"), developed by <strong>Webs By JTS</strong>, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, please do not install or use the Application.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div class="card">
-          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.75rem;">🔓 License &amp; Open-Source Terms</h3>
-          <ul style="margin-left: 1.25rem; color: var(--text-muted); line-height: 1.8;">
-            <li><strong>MIT License</strong>: Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" style="color: var(--accent-neon);">MIT License</a>.</li>
-            <li><strong>Permissions</strong>: Granted full permission to run, modify, compile, and distribute copies for personal, educational, or commercial use.</li>
-            <li><strong>Source Code</strong>: Publicly accessible on the <a href="https://github.com/xtros/Muziso" style="color: var(--accent-neon);">Muziso GitHub Repository</a>.</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.75rem;">🎧 Fair Use &amp; Disclaimers</h3>
-          <ul style="margin-left: 1.25rem; color: var(--text-muted); line-height: 1.8;">
-            <li><strong>Aggregator Layer</strong>: Functions as an aggregator client and user-interface layer for local audio and public online music services (JioSaavn, Spotify Web API, <code>yt-dlp</code>).</li>
-            <li><strong>Media Ownership</strong>: All trademarks, song titles, cover art, and streams remain property of respective owners and publishers.</li>
-            <li><strong>No Hosting</strong>: Muziso does not host, upload, or monetize copyrighted audio files.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="card" style="margin-bottom: 1.5rem;">
-        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem;">⚡ Software Warranty &amp; Disclaimer</h3>
-        <p style="color: var(--text-muted); line-height: 1.7;">
-          Muziso is provided <strong>"AS IS"</strong>, without warranty of any kind, express or implied. In no event shall the authors, copyright holders, or contributors be liable for any claim, damages, data loss, or other liability arising from the use of the Application.
-        </p>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Effective Date: February 19, 2026 &bull; Desktop &amp; Mobile</p>
       </div>
 
       <div class="card">
-        <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.2rem; margin-bottom: 0.5rem;">📬 Updates &amp; Contact</h3>
-        <p style="color: var(--text-muted); line-height: 1.7;">
-          We reserve the right to update the Application and revise these Terms at any time. For legal inquiries, please visit the <a href="https://github.com/xtros/Muziso/issues" style="color: var(--accent-neon);">GitHub Repository</a> or contact <strong>Webs By JTS</strong>.
-        </p>
+        <h3 style="color: #fff; margin-bottom: 0.75rem;">1. License &amp; Open Source</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.25rem;">Muziso is open-source software distributed under the terms of the <strong>MIT License</strong>. You are free to inspect, modify, fork, and distribute the source code.</p>
+
+        <h3 style="color: #fff; margin-bottom: 0.75rem;">2. Third-Party Media &amp; Content</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.25rem;">Muziso does not host, store, or sell copyright-protected audio recordings. Streamed audio is resolved directly from public CDN endpoints. Users are responsible for complying with copyright laws and terms of service in their respective jurisdictions.</p>
       </div>
     </section>
 
@@ -1191,14 +1630,14 @@ npm run tauri dev</code></pre>
   <footer>
     <div class="container">
       <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-bottom: 1rem;">
-        <a href="privacy.html" onclick="switchTab('privacy', event)">Privacy Policy</a>
-        <a href="terms.html" onclick="switchTab('terms', event)">Terms &amp; Conditions</a>
+        <a href="#privacy" onclick="switchTab('privacy', event)">Privacy Policy</a>
+        <a href="#terms" onclick="switchTab('terms', event)">Terms &amp; Conditions</a>
         <a href="https://github.com/xtros/Muziso/blob/main/LICENSE" target="_blank">MIT License</a>
         <a href="https://github.com/xtros/Muziso/issues" target="_blank">Report a Bug</a>
-        <a href="https://github.com/xtros/Muziso" target="_blank">GitHub</a>
+        <a href="https://github.com/xtros/Muziso" target="_blank">GitHub Repository</a>
       </div>
       <p>Muziso is open-source software licensed under the <a href="https://github.com/xtros/Muziso/blob/main/LICENSE">MIT License</a>.</p>
-      <p style="margin-top: 0.5rem;">Built with ❤️ by <a href="https://github.com/xtros">Webs By JTS</a> using Tauri v2 &amp; React 19.</p>
+      <p style="margin-top: 0.5rem;">Built with ❤️ by <a href="https://github.com/xtros">Webs By JTS</a> for Desktop (Tauri v2 + Rust) &amp; Mobile (Native Android Kotlin).</p>
     </div>
   </footer>
 
@@ -1258,6 +1697,54 @@ npm run tauri dev</code></pre>
       window.scrollTo(0, 0);
     }
 
+    function switchInstallTab(platformId, e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+      const parent = document.getElementById('installation');
+      if (!parent) return;
+      parent.querySelectorAll('.subtab-btn').forEach(btn => btn.classList.remove('active'));
+      if (e && e.currentTarget) {
+        e.currentTarget.classList.add('active');
+      }
+      parent.querySelectorAll('.subtab-content').forEach(content => content.classList.remove('active'));
+      const target = document.getElementById('install-' + platformId);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+
+    function switchArchTab(archId, e) {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+      const parent = document.getElementById('architecture');
+      if (!parent) return;
+      parent.querySelectorAll('.subtab-btn').forEach(btn => btn.classList.remove('active'));
+      if (e && e.currentTarget) {
+        e.currentTarget.classList.add('active');
+      }
+      parent.querySelectorAll('.subtab-content').forEach(content => content.classList.remove('active'));
+      const target = document.getElementById(archId);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+
+    function filterFeatures(platform, btn) {
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cards = document.querySelectorAll('.feature-card');
+      cards.forEach(card => {
+        const cardPlat = card.getAttribute('data-platform');
+        if (platform === 'all' || cardPlat === platform || (platform !== 'all' && cardPlat === 'universal')) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       const hash = window.location.hash.replace('#', '');
       if (hash && document.getElementById(hash)) {
@@ -1278,22 +1765,100 @@ npm run tauri dev</code></pre>
       });
     }
   
-    // Auto-fetch latest release version badge from GitHub API
+    // Operating System Detection & Smart Download Manager
+    let latestReleaseData = null;
+
+    function detectOS() {
+      const ua = navigator.userAgent || navigator.platform || '';
+      if (/android/i.test(ua)) return 'android';
+      if (/iPad|iPhone|iPod/.test(ua)) return 'ios';
+      if (/Macintosh|Mac OS X|MacIntel/i.test(ua)) return 'macos';
+      if (/Linux/i.test(ua)) return 'linux';
+      if (/Win/i.test(ua)) return 'windows';
+      return 'windows';
+    }
+
+    function downloadAsset(targetType) {
+      const os = detectOS();
+      let targetUrl = '';
+      const baseDownload = 'https://github.com/xtros/Muziso/releases/latest/download';
+
+      if (latestReleaseData && Array.isArray(latestReleaseData.assets) && latestReleaseData.assets.length > 0) {
+        const assets = latestReleaseData.assets;
+        let matched = null;
+
+        if (targetType === 'desktop') {
+          if (os === 'macos') {
+            matched = assets.find(a => a.name.endsWith('.dmg') || a.name.endsWith('.app.tar.gz'));
+          } else if (os === 'linux') {
+            matched = assets.find(a => a.name.endsWith('.AppImage') || a.name.endsWith('.deb'));
+          } else {
+            matched = assets.find(a => a.name.endsWith('-setup.exe') || a.name.endsWith('.exe') || a.name.endsWith('.msi'));
+          }
+        } else if (targetType === 'android') {
+          matched = assets.find(a => a.name.endsWith('.apk'));
+        } else if (targetType === 'windows-exe') {
+          matched = assets.find(a => a.name.endsWith('-setup.exe') || a.name.endsWith('.exe'));
+        } else if (targetType === 'windows-msi') {
+          matched = assets.find(a => a.name.endsWith('.msi'));
+        } else if (targetType === 'windows-zip') {
+          matched = assets.find(a => a.name.endsWith('.zip'));
+        } else if (targetType === 'macos-dmg') {
+          matched = assets.find(a => a.name.endsWith('.dmg'));
+        } else if (targetType === 'macos-bundle') {
+          matched = assets.find(a => a.name.endsWith('.tar.gz') || a.name.endsWith('.zip'));
+        } else if (targetType === 'linux-appimage') {
+          matched = assets.find(a => a.name.endsWith('.AppImage'));
+        } else if (targetType === 'linux-deb') {
+          matched = assets.find(a => a.name.endsWith('.deb'));
+        }
+
+        if (matched && matched.browser_download_url) {
+          targetUrl = matched.browser_download_url;
+        }
+      }
+
+      if (!targetUrl) {
+        const fallbacks = {
+          'desktop': (os === 'macos' ? `${baseDownload}/Muziso_0.1.8_x64.dmg` : (os === 'linux' ? `${baseDownload}/Muziso_0.1.8_amd64.AppImage` : `${baseDownload}/Muziso_0.1.8_x64-setup.exe`)),
+          'android': `${baseDownload}/Muziso_v0.1.8.apk`,
+          'windows-exe': `${baseDownload}/Muziso_0.1.8_x64-setup.exe`,
+          'windows-msi': `${baseDownload}/Muziso_0.1.8_x64_en-US.msi`,
+          'windows-zip': `${baseDownload}/Muziso_0.1.8_x64.zip`,
+          'macos-dmg': `${baseDownload}/Muziso_0.1.8_x64.dmg`,
+          'macos-bundle': `${baseDownload}/Muziso_0.1.8_universal.app.tar.gz`,
+          'linux-appimage': `${baseDownload}/Muziso_0.1.8_amd64.AppImage`,
+          'linux-deb': `${baseDownload}/muziso_0.1.8_amd64.deb`
+        };
+        targetUrl = fallbacks[targetType] || 'https://github.com/xtros/Muziso/releases/latest';
+      }
+
+      // Automatically trigger file download
+      window.location.href = targetUrl;
+    }
+
+    // Auto-fetch latest release info from GitHub API
     fetch('https://api.github.com/repos/xtros/Muziso/releases/latest')
       .then(res => res.json())
       .then(data => {
         if (data && data.tag_name) {
+          latestReleaseData = data;
           const versionEl = document.getElementById('app-version');
           if (versionEl) {
             versionEl.innerText = data.tag_name;
             versionEl.style.display = 'inline-flex';
           }
+          const desktopText = document.getElementById('desktop-download-text');
+          if (desktopText) {
+            const os = detectOS();
+            const osName = os === 'macos' ? 'macOS' : (os === 'linux' ? 'Linux' : 'Windows');
+            desktopText.innerText = `Download for ${osName} (${data.tag_name})`;
+          }
         }
       })
       .catch(() => {
-        // If offline or unreachable, badge remains hidden (showing only the name)
+        // Fallback default state
       });
-  
   </script>
 
 </body>
